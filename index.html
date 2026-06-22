@@ -1,1724 +1,996 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Salman K Abdool | Fitness | Nutrition | Shop</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --bg: #111;
-      --text: #eee;
-      --primary: #00ffcc;
-      --card-bg: #1a1a1a;
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-    }
-    nav {
-      position: sticky;
-      top: 0;
-      background: #000;
-      z-index: 1000;
-      padding: 20px 30px;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      flex-wrap: wrap;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    }
-    nav a {
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 700;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-size: 16px;
-      transition: all 0.3s ease;
-    }
-    nav a:hover {
-      background: var(--primary);
-      color: #000;
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 255, 204, 0.4);
-    }
-    header {
-      text-align: center;
-      padding: 80px 20px 40px;
-      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7));
-      position: relative;
-    }
-    header h1 {
-      font-size: 42px;
-      color: var(--primary);
-      text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
-      margin-bottom: 15px;
-    }
-    header p {
-      color: #ccc;
-      font-size: 18px;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    .hero-img {
-      text-align: center;
-      margin: 40px auto;
-      position: relative;
-    }
-    .hero-img img {
-      width: 300px;
-      border-radius: 12px;
-      border: 5px solid var(--primary);
-      box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
-      transition: transform 0.3s ease;
-    }
-    .hero-img img:hover {
-      transform: scale(1.03);
-    }
-    section {
-      padding: 80px 30px;
-      max-width: 1400px;
-      margin: auto;
-    }
-    h2 {
-      color: var(--primary);
-      margin-bottom: 30px;
-      font-size: 32px;
-      text-align: center;
-      position: relative;
-      display: inline-block;
-      padding-bottom: 10px;
-    }
-    h2:after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 4px;
-      background: var(--primary);
-      border-radius: 2px;
-    }
-    .shop-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-    }
-    .shop-item {
-      background: var(--card-bg);
-      border: 2px solid var(--primary);
-      border-radius: 10px;
-      overflow: hidden;
-      text-align: center;
-      padding: 20px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-    .shop-item:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 30px rgba(0, 255, 204, 0.2);
-    }
-    .shop-item img {
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-    .shop-item h3 {
-      margin: 12px 0 6px;
-      color: var(--primary);
-    }
-    .shop-item p {
-      color: #ccc;
-      min-height: 40px;
-    }
-    .shop-item a {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 20px;
-      background: var(--primary);
-      color: black;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: all 0.3s ease;
-    }
-    .shop-item a:hover {
-      background: #00c896;
-      transform: scale(1.05);
-    }
-    .contact, .community, .tracker {
-      background: #1a1a1a;
-      border-radius: 12px;
-      padding: 40px;
-      margin-top: 50px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-    footer {
-      background: #000;
-      color: #aaa;
-      text-align: center;
-      padding: 30px;
-      font-size: 16px;
-      border-top: 2px solid var(--primary);
-    }
-    footer a {
-      color: var(--primary);
-      margin: 0 10px;
-      text-decoration: none;
-      transition: all 0.3s;
-    }
-    footer a:hover {
-      text-shadow: 0 0 10px var(--primary);
-    }
-    input, select, button {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: 1px solid #888;
-      background: #222;
-      color: #fff;
-    }
-    button {
-      background: var(--primary);
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s;
-      border: none;
-    }
-    button:hover {
-      background: #00c896;
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 255, 204, 0.4);
-    }
-    
-    /* Pool Game Styles */
-    .pool-container {
-      max-width: 800px;
-      margin: 40px auto;
-      background: #1a1a1a;
-      border-radius: 12px;
-      padding: 30px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      border: 2px solid var(--primary);
-      position: relative;
-      overflow: hidden;
-    }
-    .pool-container:before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(0,255,204,0.1) 0%, transparent 70%);
-      z-index: 0;
-    }
-    .pool-header {
-      text-align: center;
-      margin-bottom: 20px;
-      position: relative;
-      z-index: 1;
-    }
-    .pool-header h3 {
-      color: var(--primary);
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-    .pool-header p {
-      color: #ccc;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    #poolCanvas {
-      width: 100%;
-      height: 400px;
-      background: #0a3b16;
-      border-radius: 8px;
-      display: block;
-      margin: 0 auto;
-      border: 12px solid #5c3b1f;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-      cursor: pointer;
-      touch-action: none;
-      position: relative;
-      z-index: 1;
-    }
-    .game-controls {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-    .game-controls button {
-      padding: 12px 25px;
-      min-width: 150px;
-    }
-    #powerMeter {
-      height: 15px;
-      background: #333;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-top: 20px;
-      position: relative;
-      z-index: 1;
-      display: none;
-    }
-    #powerFill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(to right, #00ff88, #00ffcc);
-      transition: width 0.1s;
-      border-radius: 10px;
-    }
-    #winMessage {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0,0,0,0.9);
-      color: #fff;
-      padding: 30px;
-      border-radius: 15px;
-      text-align: center;
-      display: none;
-      z-index: 10;
-      border: 3px solid var(--primary);
-      box-shadow: 0 0 30px rgba(0,0,0,0.8);
-      width: 90%;
-      max-width: 400px;
-    }
-    #winMessage h3 {
-      color: var(--primary);
-      font-size: 28px;
-      margin-bottom: 15px;
-    }
-    #winMessage p {
-      margin-bottom: 20px;
-      font-size: 18px;
-    }
-    #playAgainBtn {
-      background: var(--primary);
-      color: #000;
-      border: none;
-      padding: 12px 30px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 16px;
-      transition: all 0.3s;
-    }
-    #playAgainBtn:hover {
-      background: #00c896;
-      transform: scale(1.05);
-    }
-    
-    /* Cursor light effect */
-    .cursor-light {
-      position: fixed;
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,255,204,0.2) 0%, rgba(0,255,204,0) 70%);
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      z-index: -1;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    body:hover .cursor-light {
-      opacity: 1;
-    }
-    
-    /* Profile image glow */
-    @keyframes intenseGlow {
-      0% { box-shadow: 0 0 0 0 rgba(0, 255, 204, 0); }
-      50% { box-shadow: 0 0 50px 20px rgba(0, 255, 204, 0.9); }
-      100% { box-shadow: 0 0 10px 5px rgba(0, 255, 204, 0.5); }
-    }
-    
-    .hero-img img {
-      animation: intenseGlow 2s ease-out;
-      animation-fill-mode: forwards;
-      position: relative;
-      z-index: 10;
-    }
-    
-    .hero-img img:hover {
-      box-shadow: 0 0 25px 10px rgba(0, 255, 204, 0.7) !important;
-      transition: box-shadow 0.3s ease;
-    }
-    
-    /* Contact section styles */
-    .contact-section {
-      background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
-      padding: 80px 20px;
-      position: relative;
-    }
-    
-    <style>
-.contact-section {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  padding: 3rem 0;
-  color: white;
-  font-family: 'Arial', sans-serif;
-}
-
-.contact-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.section-title {
-  text-align: center;
-  margin-bottom: 2rem;
-  font-size: 2.5rem;
-  background: linear-gradient(90deg, #ff8a00, #e52e71);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: titleGlow 3s infinite alternate;
-}
-
-.contact-card {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-
-.contact-info, .contact-social {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
-  max-width: 500px;
-}
-
-.piano-key {
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  height: 100px;
-}
-
-.piano-key::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: 0.5s;
-}
-
-.piano-key:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.piano-key:hover::before {
-  left: 100%;
-}
-
-.icon-wrapper {
-  font-size: 2rem;
-  margin-right: 20px;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
-
-.piano-key:hover .icon-wrapper {
-  transform: scale(1.1);
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-}
-
-.contact-details h3 {
-  margin: 0 0 5px 0;
-  font-size: 1.2rem;
-  color: #fff;
-}
-
-.contact-details p, .contact-details a {
-  margin: 0;
-  color: #ccc;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.contact-details a:hover {
-  color: #ff8a00;
-}
-
-/* Piano key animations */
-@keyframes pianoGlow {
-  0% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.3); }
-  100% { box-shadow: 0 0 20px rgba(255, 138, 0, 0.7); }
-}
-
-@keyframes titleGlow {
-  0% { text-shadow: 0 0 5px rgba(255, 138, 0, 0.3); }
-  100% { text-shadow: 0 0 15px rgba(229, 46, 113, 0.7); }
-}
-
-/* Sequential animation for piano keys */
-.piano-key:nth-child(1) { animation: pianoGlow 2s infinite alternate; }
-.piano-key:nth-child(2) { animation: pianoGlow 2s infinite alternate 0.5s; }
-.piano-key:nth-child(3) { animation: pianoGlow 2s infinite alternate 1s; }
-.piano-key:nth-child(4) { animation: pianoGlow 2s infinite alternate 1.5s; }
-</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Villa Mont Oreb Alain — Reservation Management</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
-    
-    /* Responsive design */
-    @media (max-width: 768px) {
-      nav {
-        padding: 15px 10px;
-        gap: 10px;
-      }
-      nav a {
-        padding: 8px 15px;
-        font-size: 14px;
-      }
-      header {
-        padding: 60px 15px 30px;
-      }
-      section {
-        padding: 50px 15px;
-      }
-      .hero-img img {
-        width: 250px;
-      }
-      .shop-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-      }
-      #poolCanvas {
-        height: 300px;
-      }
-    }
-  </style>
+:root{
+  --bg:#0f1115; --bg2:#161922; --card:rgba(255,255,255,0.04); --card-solid:#1b1f2a;
+  --border:rgba(255,255,255,0.08); --text:#eef0f5; --muted:#9aa3b5;
+  --accent:#c9a24b; --accent2:#e6c879;
+  --green:#3ec77a; --red:#ef5b6f; --gray:#8a8f9c; --blue:#4fa3e0; --orange:#f0a649;
+  --radius:16px; --shadow:0 10px 30px rgba(0,0,0,0.35);
+}
+[data-theme="light"]{
+  --bg:#f4f3ef; --bg2:#ffffff; --card:rgba(255,255,255,0.7); --card-solid:#ffffff;
+  --border:rgba(0,0,0,0.08); --text:#1c1e26; --muted:#5d6270;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;background:
+  radial-gradient(circle at 10% 0%, rgba(201,162,75,0.12), transparent 40%),
+  radial-gradient(circle at 90% 20%, rgba(79,163,224,0.10), transparent 40%),
+  var(--bg);color:var(--text);min-height:100vh;}
+a{color:inherit;text-decoration:none;}
+.app{display:flex;min-height:100vh;}
+
+/* Sidebar */
+.sidebar{width:230px;background:var(--bg2);border-right:1px solid var(--border);padding:24px 16px;position:fixed;top:0;left:0;height:100vh;display:flex;flex-direction:column;gap:6px;z-index:50;transition:transform .25s;}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:24px;padding:0 8px;}
+.brand .logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#1a1a1a;}
+.brand .name{font-weight:700;font-size:14px;line-height:1.2;}
+.brand .sub{font-size:11px;color:var(--muted);}
+.nav-item{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;color:var(--muted);cursor:pointer;font-size:14px;font-weight:500;}
+.nav-item:hover{background:var(--card);color:var(--text);}
+.nav-item.active{background:linear-gradient(135deg,rgba(201,162,75,0.18),rgba(201,162,75,0.05));color:var(--accent);border:1px solid rgba(201,162,75,0.25);}
+.nav-icon{width:18px;text-align:center;}
+.sidebar-footer{margin-top:auto;font-size:11px;color:var(--muted);padding:8px;}
+
+/* Main */
+.main{margin-left:230px;flex:1;padding:24px 28px 80px;max-width:1400px;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;gap:12px;flex-wrap:wrap;}
+.topbar h1{font-size:22px;margin:0;}
+.topbar .right{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.admin-select{background:var(--card-solid);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:10px;font-size:13px;}
+.btn{background:var(--card-solid);border:1px solid var(--border);color:var(--text);padding:9px 14px;border-radius:10px;font-size:13px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px;}
+.btn:hover{border-color:var(--accent);}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#1a1a1a;border:none;}
+.btn-primary:hover{filter:brightness(1.05);}
+.btn-danger{color:var(--red);}
+.btn-sm{padding:6px 10px;font-size:12px;border-radius:8px;}
+.icon-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;backdrop-filter:blur(14px);box-shadow:var(--shadow);}
+.grid-cards{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:22px;}
+.stat-card{padding:16px;}
+.stat-card .val{font-size:24px;font-weight:700;}
+.stat-card .lbl{font-size:12px;color:var(--muted);margin-top:4px;}
+.stat-card .ico{font-size:18px;margin-bottom:6px;}
+
+.section-title{font-size:15px;font-weight:700;margin:0 0 14px;display:flex;align-items:center;gap:8px;}
+
+/* Calendar */
+.cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.cal-month{font-size:18px;font-weight:700;}
+.cal-nav{display:flex;gap:8px;}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:14px;}
+.legend span{display:inline-flex;align-items:center;gap:6px;}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+.cal-dow{text-align:center;font-size:11px;color:var(--muted);font-weight:700;padding:4px 0;}
+.cal-day{min-height:78px;border-radius:10px;border:1px solid var(--border);padding:6px;font-size:12px;cursor:pointer;position:relative;background:rgba(255,255,255,0.02);transition:.15s;}
+.cal-day:hover{border-color:var(--accent);transform:translateY(-2px);}
+.cal-day.other{opacity:0.3;}
+.cal-day.today{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset;}
+.cal-day .dnum{font-weight:700;}
+.cal-day .events{margin-top:4px;display:flex;flex-direction:column;gap:2px;}
+.cal-day .evt{font-size:10px;padding:2px 5px;border-radius:5px;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.evt.reserved{background:var(--red);} .evt.blocked{background:var(--gray);} .evt.owner{background:var(--blue);} .evt.maintenance{background:var(--orange);} .evt.note{background:#6c5dd3;}
+
+/* layout two-col */
+.two-col{display:grid;grid-template-columns:2.2fr 1fr;gap:18px;align-items:start;}
+
+/* table */
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{text-align:left;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em;padding:8px 10px;border-bottom:1px solid var(--border);}
+td{padding:10px;border-bottom:1px solid var(--border);}
+tr:hover td{background:rgba(255,255,255,0.03);}
+.badge{padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;color:#fff;display:inline-block;}
+.badge.reserved{background:var(--red);} .badge.blocked{background:var(--gray);} .badge.owner{background:var(--blue);} .badge.maintenance{background:var(--orange);}
+.search-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+input[type=text],input[type=search],input[type=number],input[type=date],input[type=email],input[type=tel],select,textarea{
+  background:var(--card-solid);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:10px;font-size:13px;width:100%;font-family:inherit;}
+.filters{display:flex;gap:8px;flex-wrap:wrap;}
+.chip{padding:7px 13px;border-radius:20px;border:1px solid var(--border);font-size:12px;cursor:pointer;color:var(--muted);}
+.chip.active{background:var(--accent);color:#1a1a1a;border-color:var(--accent);font-weight:700;}
+
+/* feed */
+.feed-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12.5px;}
+.feed-item:last-child{border-bottom:none;}
+.feed-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0;background:var(--accent);}
+.feed-time{color:var(--muted);font-size:11px;}
+
+/* modal */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:200;padding:20px;}
+.overlay.show{display:flex;}
+.modal{background:var(--card-solid);border:1px solid var(--border);border-radius:18px;width:100%;max-width:520px;max-height:88vh;overflow-y:auto;padding:22px;box-shadow:var(--shadow);}
+.modal h3{margin:0 0 4px;font-size:17px;}
+.modal .sub{color:var(--muted);font-size:12px;margin-bottom:16px;}
+.modal-close{position:absolute;top:18px;right:20px;cursor:pointer;color:var(--muted);font-size:18px;background:none;border:none;}
+.form-row{margin-bottom:12px;}
+.form-row label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:600;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;}
+.action-tile{border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;cursor:pointer;background:rgba(255,255,255,0.02);}
+.action-tile:hover{border-color:var(--accent);}
+.action-tile .ic{font-size:20px;margin-bottom:6px;}
+.action-tile .tt{font-size:12px;font-weight:700;}
+.modal-foot{display:flex;justify-content:flex-end;gap:8px;margin-top:16px;}
+.existing-evt{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);border-radius:10px;padding:10px;margin-bottom:8px;font-size:12.5px;}
+
+/* whatsapp float */
+.wa-float{position:fixed;bottom:24px;right:24px;background:#25D366;color:#fff;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 8px 24px rgba(37,211,102,0.5);z-index:300;cursor:pointer;}
+
+.page{display:none;}
+.page.active{display:block;}
+
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.chart-box{height:280px;}
+
+.toast-wrap{position:fixed;top:18px;right:18px;z-index:400;display:flex;flex-direction:column;gap:8px;}
+.toast{background:var(--card-solid);border:1px solid var(--border);border-left:4px solid var(--accent);padding:12px 16px;border-radius:10px;font-size:13px;box-shadow:var(--shadow);min-width:240px;animation:slidein .25s;}
+@keyframes slidein{from{transform:translateX(30px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+
+.settings-form{max-width:480px;display:flex;flex-direction:column;gap:14px;}
+.hamburger{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;}
+
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .main{margin-left:0;padding:18px;}
+  .grid-cards{grid-template-columns:repeat(2,1fr);}
+  .two-col{grid-template-columns:1fr;}
+  .charts-grid{grid-template-columns:1fr;}
+  .form-grid{grid-template-columns:1fr;}
+  .hamburger{display:inline-block;}
+  .cal-day{min-height:60px;font-size:10px;}
+}
+</style>
 </head>
-<body>
+<body data-theme="dark">
+<div class="toast-wrap" id="toastWrap"></div>
 
-<nav>
-  <a href="#shop">Shop 🛒</a>
-  <a href="#community">Community 🤝</a>
-  <a href="#tracker">Track BMI/Calories 🧮</a>
-  <a href="#contact">Contact 📞</a>
-</nav>
+<div class="overlay" id="overlay"></div>
 
-<header>
-  <h1>Salman K Abdool</h1>
-  <p>Personal Coach | Nutritionist | Federation PLABB 🇲🇺</p>
-</header>
+<div class="app">
+  <div class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="logo">VM</div>
+      <div>
+        <div class="name">Villa Mont Oreb Alain</div>
+        <div class="sub">Reservation Suite</div>
+      </div>
+    </div>
+    <div class="nav-item active" data-page="dashboard"><span class="nav-icon">🏠</span> Dashboard</div>
+    <div class="nav-item" data-page="calendar"><span class="nav-icon">📅</span> Calendar</div>
+    <div class="nav-item" data-page="bookings"><span class="nav-icon">📋</span> Bookings</div>
+    <div class="nav-item" data-page="analytics"><span class="nav-icon">📊</span> Analytics</div>
+    <div class="nav-item" data-page="activity"><span class="nav-icon">🔔</span> Activity Log</div>
+    <div class="nav-item" data-page="settings"><span class="nav-icon">⚙️</span> Settings</div>
+    <div class="sidebar-footer">© <span id="yearFoot"></span> Villa Mont Oreb Alain<br>Offline-ready · LocalStorage</div>
+  </div>
 
-<div class="hero-img">
-    <img src="image/sa3.jpg" alt="Salman K Abdool" class="glowing-profile">
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button class="hamburger" id="hamburger">☰</button>
+        <h1 id="pageTitle">Dashboard</h1>
+      </div>
+      <div class="right">
+        <select class="admin-select" id="currentAdmin">
+          <option>Alain</option>
+          <option>Kessaven</option>
+          <option>Hitech</option>
+          <option>Superdeals</option>
+        </select>
+        <button class="btn" id="toggleTheme">🌙 Dark</button>
+        <button class="btn btn-primary" id="newBookingBtn">+ New Booking</button>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="grid-cards" id="statCards"></div>
+      <div class="two-col">
+        <div class="card">
+          <div class="section-title">📅 This Month at a Glance</div>
+          <div id="miniCalWrap"></div>
+        </div>
+        <div class="card">
+          <div class="section-title">🔔 Recent Activity</div>
+          <div id="dashFeed"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CALENDAR -->
+    <div class="page" id="page-calendar">
+      <div class="card" style="margin-bottom:18px;">
+        <div class="section-title">🚫 Block Dates (Easy Mode)</div>
+        <div class="sub" style="color:var(--muted);font-size:12.5px;margin-bottom:14px;">
+          Pick a "From" date and a "To" date below, then click <b>+ Add Another Line</b> for each new booking you need to block. When you're done, click <b>Block All Dates</b> once.
+        </div>
+        <div id="bulkRows"></div>
+        <button class="btn" id="addBulkRowBtn" style="margin-top:6px;">+ Add Another Line</button>
+        <div class="form-grid" style="margin-top:14px;">
+          <div class="form-row"><label>Reason (applies to all)</label><input type="text" id="bulkBlockReason" placeholder="e.g. Owner block"></div>
+          <div class="form-row"><label>Your Name</label><select id="bulkBlockAdmin"></select></div>
+        </div>
+        <button class="btn btn-primary" id="bulkBlockBtn" style="margin-top:6px;">Block All Dates</button>
+        <div id="bulkBlockResult" style="margin-top:10px;font-size:12.5px;"></div>
+      </div>
+      <div class="card">
+        <div class="cal-header">
+          <div class="cal-nav">
+            <button class="btn btn-sm" id="prevMonth">‹ Prev</button>
+            <button class="btn btn-sm" id="todayBtn">Today</button>
+            <button class="btn btn-sm" id="nextMonth">Next ›</button>
+          </div>
+          <div class="cal-month" id="calMonthLabel"></div>
+          <div class="cal-nav">
+            <button class="btn btn-sm" id="printCalBtn">🖨️ Print</button>
+            <button class="btn btn-sm" id="pdfCalBtn">⬇️ PDF</button>
+          </div>
+        </div>
+        <div class="legend">
+          <span><i class="dot" style="background:var(--green)"></i>Available</span>
+          <span><i class="dot" style="background:var(--red)"></i>Reserved</span>
+          <span><i class="dot" style="background:var(--gray)"></i>Blocked</span>
+          <span><i class="dot" style="background:var(--blue)"></i>Owner Stay</span>
+          <span><i class="dot" style="background:var(--orange)"></i>Maintenance</span>
+        </div>
+        <div class="cal-grid" id="calDow"></div>
+        <div class="cal-grid" id="calGrid" style="margin-top:6px;"></div>
+      </div>
+    </div>
+
+    <!-- BOOKINGS -->
+    <div class="page" id="page-bookings">
+      <div class="card">
+        <div class="section-title">📋 All Bookings & Events</div>
+        <div class="search-row">
+          <input type="search" id="searchInput" placeholder="Search guest, date, source, admin..." style="max-width:320px;">
+          <div class="filters" id="filterChips">
+            <div class="chip active" data-f="all">All</div>
+            <div class="chip" data-f="reserved">Reserved</div>
+            <div class="chip" data-f="blocked">Blocked</div>
+            <div class="chip" data-f="owner">Owner Stay</div>
+            <div class="chip" data-f="maintenance">Maintenance</div>
+          </div>
+          <button class="btn" id="exportJsonBtn">⬇️ Export JSON</button>
+          <button class="btn" id="importJsonBtn">⬆️ Import JSON</button>
+          <input type="file" id="importFileInput" accept=".json" style="display:none;">
+          <button class="btn" id="backupBtn">💾 Backup</button>
+          <button class="btn" id="restoreBtn">♻️ Restore</button>
+          <input type="file" id="restoreFileInput" accept=".json" style="display:none;">
+        </div>
+        <div style="overflow-x:auto;">
+        <table id="bookingsTable">
+          <thead><tr>
+            <th>Guest</th><th>Check-In</th><th>Check-Out</th><th>Guests</th><th>Amount</th><th>Source</th><th>Managed By</th><th>Status</th><th>Actions</th>
+          </tr></thead>
+          <tbody id="bookingsBody"></tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANALYTICS -->
+    <div class="page" id="page-analytics">
+      <div class="charts-grid">
+        <div class="card"><div class="section-title">📈 Monthly Occupancy</div><div class="chart-box"><canvas id="chartOccupancy"></canvas></div></div>
+        <div class="card"><div class="section-title">🧭 Booking Sources</div><div class="chart-box"><canvas id="chartSources"></canvas></div></div>
+        <div class="card"><div class="section-title">💰 Revenue Tracking</div><div class="chart-box"><canvas id="chartRevenue"></canvas></div></div>
+        <div class="card"><div class="section-title">📉 Reservation Trends</div><div class="chart-box"><canvas id="chartTrends"></canvas></div></div>
+      </div>
+    </div>
+
+    <!-- ACTIVITY -->
+    <div class="page" id="page-activity">
+      <div class="card">
+        <div class="section-title">🔔 Notification Center & Audit Log</div>
+        <button class="btn btn-danger btn-sm" id="clearLogBtn" style="margin-bottom:12px;">Clear Log (Manual Only)</button>
+        <div id="fullFeed"></div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="page" id="page-settings">
+      <div class="card">
+        <div class="section-title">⚙️ Settings</div>
+        <div class="settings-form">
+          <div class="form-row"><label>Villa Name</label><input type="text" id="setVillaName"></div>
+          <div class="form-row"><label>WhatsApp Number (with country code, no +)</label><input type="text" id="setWhatsapp"></div>
+          <div class="form-row"><label>Currency Symbol</label><input type="text" id="setCurrency"></div>
+          <div class="form-row"><label>Default Admin</label>
+            <select id="setDefaultAdmin"><option>Alain</option><option>Kessaven</option><option>Hitech</option><option>Superdeals</option></select>
+          </div>
+          <div class="form-row"><label>Theme</label>
+            <select id="setTheme"><option value="dark">Dark</option><option value="light">Light</option></select>
+          </div>
+          <button class="btn btn-primary" id="saveSettingsBtn">Save Settings</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
-<!-- Spin Wheel Section -->
-<section id="fitness-wheelie" style="background:#111; padding:40px 20px; text-align:center; color:#fff; font-family:'Segoe UI', sans-serif; border-radius:20px; max-width:500px; margin:auto;">
-  <h2 style="color:#00ffcc;">🎯 The Fitness Wheelie</h2>
-  <p style="margin-bottom:20px;">Spin once and win a reward!</p>
-
-  <canvas id="wheel" width="300" height="300" style="border-radius:50%; background:#222; margin:20px auto;"></canvas>
-  <br>
-  <button id="spin-btn" style="padding:14px 28px; font-size:16px; background:#00ffcc; border:none; border-radius:10px; color:#000; font-weight:bold; cursor:pointer;">SPIN NOW</button>
-
-  <div id="result" style="margin-top:20px; font-size:18px; color:#00ffcc;"></div>
-
-  <!-- Modal -->
-  <div id="reward-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:1000; justify-content:center; align-items:center;">
-    <div style="background:white; padding:30px 20px; border-radius:12px; text-align:center; width:90%; max-width:320px;">
-      <h3 style="color:#111;">🏆 You Got:</h3>
-      <p id="reward-text" style="font-size:18px; font-weight:bold; color:#00aa88; word-wrap: break-word;"></p>
-      <button id="shop-btn" style="margin-top:15px; background:#00cc99; color:#fff; padding:10px 20px; border:none; border-radius:6px; cursor:pointer;">Go to Shop</button>
-      
-      <button id="share-whatsapp" style="margin-top:10px; background:#25D366; color:#fff; padding:10px 20px; border:none; border-radius:6px; cursor:pointer;">
-        Share on WhatsApp
-      </button>
-      
-      <br>
-      <button id="close-modal" style="margin-top:10px; background:none; color:#333; border:none; cursor:pointer;">Close</button>
-    </div>
-  </div>
-</section>
+<div class="wa-float" id="waFloat" title="Chat on WhatsApp">💬</div>
 
 <script>
-  // WhatsApp Share button functionality
-  document.getElementById('share-whatsapp').addEventListener('click', () => {
-    const reward = document.getElementById('reward-text').textContent;
-    const message = encodeURIComponent(`I just won "${reward}" from The Fitness Wheelie! Try your luck and spin now! 🎉🏆`);
-    const whatsappUrl = `https://wa.me/?text=${message}`;
-    window.open(whatsappUrl, '_blank');
+/* ============== STATE & STORAGE ============== */
+const ADMINS = ["Alain","Kessaven","Hitech","Superdeals"];
+const SOURCES = ["Airbnb","Booking.com","Direct Booking","WhatsApp","Facebook","Instagram","Other"];
+const STORAGE_KEY = "vmoa_data_v1";
+
+let DB = loadData() || {
+  events: [],   // {id,type:'booking'|'blocked'|'owner'|'maintenance'|'note', start,end, guest,phone,email,guests,source,amount,notes,managedBy, reason, createdAt}
+  log: [],
+  settings: { villaName:"Villa Mont Oreb Alain", whatsapp:"23059237053", currency:"$", defaultAdmin:"Alain", theme:"dark" }
+};
+
+function saveData(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(DB)); }
+function loadData(){ try{ const r = localStorage.getItem(STORAGE_KEY); return r? JSON.parse(r): null; }catch(e){ return null; } }
+
+function uid(){ return 'e'+Date.now()+Math.random().toString(36).slice(2,7); }
+function fmtDate(d){ const dt = (d instanceof Date)? d : new Date(d); return dt.toISOString().slice(0,10); }
+function pretty(d){ const dt=new Date(d+'T00:00:00'); return dt.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}); }
+
+function addLog(text){
+  DB.log.unshift({id:uid(), text, time:new Date().toISOString()});
+  saveData();
+}
+
+function toast(msg){
+  const wrap = document.getElementById('toastWrap');
+  const t = document.createElement('div');
+  t.className='toast'; t.textContent = msg;
+  wrap.appendChild(t);
+  setTimeout(()=>t.remove(), 3500);
+}
+
+/* ============== DATE RANGE HELPERS ============== */
+function eachDate(start,end){
+  const arr=[]; let d = new Date(start+'T00:00:00'); const e = new Date(end+'T00:00:00');
+  while(d<=e){ arr.push(fmtDate(d)); d.setDate(d.getDate()+1); }
+  return arr;
+}
+function rangesOverlap(s1,e1,s2,e2){
+  return !(e1 < s2 || s1 > e2);
+}
+function blockingEventsOnRange(start,end,excludeId){
+  return DB.events.filter(ev=> ev.id!==excludeId && rangesOverlap(start,end,ev.start,ev.end) && ev.type!=='note');
+}
+
+/* ============== NAV ============== */
+document.querySelectorAll('.nav-item').forEach(item=>{
+  item.addEventListener('click', ()=>{
+    document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
+    item.classList.add('active');
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    const page = item.dataset.page;
+    document.getElementById('page-'+page).classList.add('active');
+    document.getElementById('pageTitle').textContent = item.textContent.trim();
+    document.getElementById('sidebar').classList.remove('open');
+    if(page==='dashboard') renderDashboard();
+    if(page==='calendar') renderCalendar();
+    if(page==='bookings') renderBookingsTable();
+    if(page==='analytics') renderAnalytics();
+    if(page==='activity') renderFullFeed();
+    if(page==='settings') loadSettingsForm();
   });
-</script>
-  
-<!-- Shop Section -->
-<section id="shop">
-  <h2>🛍️ Shop – Explore Our Gear</h2>
-  <div class="shop-grid">
-    <div class="shop-item">
-      <img src="image/photo1.jpg" alt="Black MMA T-Shirt">
-      <h3>Black MMA T-Shirt</h3>
-      <p>Comfort fit, breathable training shirt</p>
-      <a href="https://wa.me/23058127138?text=Hello Salman,I am interested in your product,Can i have more details on the MMA Black-T Shirt">Order on WhatsApp</a>
-    </div>
-    <div class="shop-item">
-      <img src="image/photo2.jpg" alt="Tougher Stronger T-Shirt">
-      <h3>Tougher Stronger T-Shirt</h3>
-      <p>Comfort fit, breathable training shirt</p>
-      <a href="https://wa.me/23058127138?text=Hello Salman,I am interested in your product,Can i have more details on the Stronger Tougher T Shirt">Order on WhatsApp</a>
-    </div>
-    <div class="shop-item">
-      <img src="image/photo3.jpg" alt="White Anabolic T-Shirt">
-      <h3>White &lt;3 Anabolic T-Shirt</h3>
-      <p>Comfort fit, breathable training shirt</p>
-      <a href="https://wa.me/23058127138?text=Hello Salman,I am interested in your product,Can i have more details on the Anabolic T Shirt">Order on WhatsApp</a>
-    </div>
-    <div class="shop-item">
-      <img src="image/photo4.jpg" alt="Legalize Steroid T-Shirt">
-      <h3>Legalize Steroid T-Shirt</h3>
-      <p>Comfort fit, breathable training shirt</p>
-      <a href="https://wa.me/23058127138?text=Hello Salman,I am interested in your product,Can i have more details on the legalize steroid-T Shirt">Order on WhatsApp</a>
-    </div>
-    <div class="shop-item">
-      <img src="image/photo5.jpg" alt="Trenbolone T-Shirt">
-      <h3>Trenbolone T-Shirt</h3>
-      <p>Comfort fit, breathable training shirt</p>
-      <a href="https://wa.me/23058127138?text=Hello Salman,I am interested in your product,Can i have more details on the Trenbolone T Shirt">Order on WhatsApp</a>
-    </div>
-    <div class="shop-item">
-      <img src="image/photo6.jpg" alt="SK Nutrition T-Shirt">
-      <h3>SK Nutrition T-Shirt</h3>
-      <p>Comfort fit, breathable training shirt</p>
-      <a href="https://wa.me/23058127138?text=Hello Salman,I am interested in your product,Can i have more details on the Sk nutrition T Shirt">Order on WhatsApp</a>
-    </div>
-    <div class="shop-item">
-      <img src="image/photo8.jpg" alt="SK Nutrition Tank Top">
-      <h3>SK Nutrition Tank Top</h3>
-      <p>Comfort fit, breathable training shirt</p>
-      <a href="https://wa.me/23058127138?text=Hello Salman,I am interested in your product,Can i have more details on the Salman Khan Nutrition Tanktop">Order on WhatsApp</a>
-    </div>
-    <div class="shop-item">
-      <img src="image/photo10.jpg" alt="Al Qaeda T-Shirt">
-      <h3>Al Qaeda T-Shirt</h3>
-      <p>Comfort fit, breathable training shirt</p>
-      <a href="https://wa.me/23058127138?text=Hello Salman,I am interested in your product,Can i have more details on the Al Qaeda Shirt">Order on WhatsApp</a>
-    </div>
-    <div class="shop-item">
-      <img src="image/photo11.jpg" alt="Jihad T-Shirt">
-      <h3>Jihad T-Shirt</h3>
-      <p>Comfort fit, breathable training shirt</p>
-      <a href="https://wa.me/23058127138?text=Hello Salman,I am interested in your product,Can i have more details on the Jihad T Shirtt">Order on WhatsApp</a>
-    </div>
-  </div>
-</section>
-
-<!-- Community Section -->
-<section id="community" class="community">
-  <h2>💪 Our Community</h2>
-  <p>Connect with athletes, trainers, and fans. Transformation stories, training tips, and more. Follow us on social media!</p>
-  <p>
-    <a href="https://www.facebook.com/profile.php?id=61562754817780" target="_blank">Facebook</a> |
-    <a href="https://www.tiktok.com/@salmankhannutrition" target="_blank">TikTok</a>
-  </p>
-</section>
-
-<!-- BMI Tracker Section -->
-<section id="tracker" class="tracker">
-  <h2>🧮 Calculate Your BMI & Calories</h2>
-  <input type="number" id="weight" placeholder="Weight (kg)" />
-  <input type="number" id="height" placeholder="Height (cm)" />
-  <button onclick="calcBMI()">Calculate BMI</button>
-  <p id="bmiResult"></p>
-  <br />
-  <select id="foodSelect">
-    <option value="200">White Rice (1 cup) - 200 kcal</option>
-    <option value="220">Brown Rice (1 cup) - 220 kcal</option>
-    <option value="160">Roti (1 piece) - 160 kcal</option>
-<option value="180">Farata (1 piece) - 180 kcal</option>
-<option value="150">Dholl Puri (1 piece) - 150 kcal</option>
-<option value="120">Bread (1 slice) - 120 kcal</option>
-<option value="90">Chapati (1 piece) - 90 kcal</option>
-<option value="250">Grilled Chicken Breast (100g) - 250 kcal</option>
-<option value="300">Fried Chicken (100g) - 300 kcal</option>
-<option value="180">Grilled Fish (100g) - 180 kcal</option>
-<option value="220">Fried Fish (100g) - 220 kcal</option>
-<option value="320">Beef Curry (100g) - 320 kcal</option>
-<option value="150">Octopus Curry (100g) - 150 kcal</option>
-<option value="120">Prawns (100g) - 120 kcal</option>
-<option value="160">Crab Masala (100g) - 160 kcal</option>
-<option value="70">Egg (1 boiled) - 70 kcal</option>
-<option value="120">Omelette (1 egg with oil) - 120 kcal</option>
-<option value="120">Chickpeas (100g) - 120 kcal</option>
-<option value="160">Tofu (100g) - 160 kcal</option>
-<option value="150">Lentils (1 cup) - 150 kcal</option>
-<option value="200">Paneer (100g) - 200 kcal</option>
-<option value="180">Bean Curry (100g) - 180 kcal</option>
-<option value="140">Mauritian Gato Piment (1 piece) - 140 kcal</option>
-<option value="100">Samosa (1 piece) - 100 kcal</option>
-<option value="350">Briani (1 plate) - 350 kcal</option>
-<option value="400">Fried Noodles (1 plate) - 400 kcal</option>
-<option value="300">Rougaille (1 serving) - 300 kcal</option>
-<option value="250">Daube (1 serving) - 250 kcal</option>
-<option value="500">Mine Frit (Fried Noodles, 1 plate) - 500 kcal</option>
-<option value="450">Boulettes (Dumplings, 5 pieces) - 450 kcal</option>
-<option value="200">Salade de Palmiste (1 serving) - 200 kcal</option>
-<option value="600">Gateau Piment (5 pieces) - 600 kcal</option>
-<option value="400">Pizza Slice (1 slice) - 400 kcal</option>
-<option value="350">Burger (1 regular) - 350 kcal</option>
-<option value="250">Hot Dog (1 piece) - 250 kcal</option>
-<option value="300">French Fries (Medium) - 300 kcal</option>
-<option value="550">Kebab Roll (1 roll) - 550 kcal</option>
-<option value="200">Spring Roll (1 piece) - 200 kcal</option>
-<option value="180">Alouda (1 glass) - 180 kcal</option>
-<option value="250">Gateau Coco (1 piece) - 250 kcal</option>
-<option value="60">Apple (1 medium) - 60 kcal</option>
-<option value="90">Banana (1 medium) - 90 kcal</option>
-<option value="50">Orange (1 medium) - 50 kcal</option>
-<option value="70">Mango (100g) - 70 kcal</option>
-<option value="40">Pineapple (100g) - 40 kcal</option>
-<option value="30">Watermelon (100g) - 30 kcal</option>
-<option value="120">Avocado (½) - 120 kcal</option>
-<option value="80">Salad (1 cup) - 80 kcal</option>
-<option value="150">Soft Drink (1 can) - 150 kcal</option>
-<option value="120">Fresh Juice (1 glass) - 120 kcal</option>
-<option value="200">Milk Tea (1 cup) - 200 kcal</option>
-<option value="100">Black Coffee (1 cup) - 100 kcal</option>
-<option value="250">Milk Coffee (1 cup) - 250 kcal</option>
-<option value="180">Lassi (1 glass) - 180 kcal</option>
-<option value="300">Ice Cream (1 scoop) - 300 kcal</option>
-<option value="350">Gulab Jamun (1 piece) - 350 kcal</option>
-<option value="200">Rasgulla (1 piece) - 200 kcal</option>
-<option value="250">Napolitaine (1 piece) - 250 kcal</option>
-<option value="400">Chocolate Cake (1 slice) - 400 kcal</option>
-<option value="150">Jalebi (1 piece) - 150 kcal</option>
-    <option value="180">Poudine Maïs (1 bowl) – 180 kcal</option>
-<option value="220">Gateau Coco (1 piece) – 220 kcal</option>
-<option value="200">Gâteau Patate (1 piece) – 200 kcal</option>
-<option value="300">Gâteau Zinzli (1 piece) – 300 kcal</option>
-<option value="150">Gâteau Patate Douce (1 piece) – 150 kcal</option>
-<option value="250">Bol Renversé (1 plate) – 250 kcal</option>
-<option value="200">Soupe Chinoise (1 bowl) – 200 kcal</option>
-<option value="160">Gato Dilwil (assorted, 3 pieces) – 160 kcal</option>
-<option value="120">Gato Bringel (eggplant fritter, 1 piece) – 120 kcal</option>
-<option value="120">Gato Brinzel (vegetable fritter, 1 piece) – 120 kcal</option>
-<option value="100">Gato Pomme de Terre (potato fritter, 1 piece) – 100 kcal</option>
-<option value="140">Chana Puri (1 piece) – 140 kcal</option>
-<option value="130">Dipin Frir (battered bread, 1 slice) – 130 kcal</option>
-<option value="90">Savory Crêpe (with chutney) – 90 kcal</option>
-<option value="160">Merveille (sweet crepe, 1 piece) – 160 kcal</option>
-<option value="300">Mine Bouille (noodle soup, 1 bowl) – 300 kcal</option>
-<option value="350">Mine Bouille with Boulettes (1 bowl) – 350 kcal</option>
-<option value="400">Mine Frite (fried noodles, 1 plate) – 400 kcal</option>
-<option value="280">Mine Frire Poule (fried noodles with chicken) – 280 kcal</option>
-<option value="320">Mine Frire Ourite (fried noodles with octopus) – 320 kcal</option>
-<option value="180">Diri Frit (fried rice, 1 plate) – 180 kcal</option>
-<option value="220">Chop Suey (1 serving) – 220 kcal</option>
-<option value="240">Sweet & Sour Fish (1 portion) – 240 kcal</option>
-<option value="260">Black Pepper Beef (1 serving) – 260 kcal</option>
-<option value="150">Sui kiow (dumpling soup, 1 bowl) – 150 kcal</option>
-<option value="120">Moon kiow (1 piece) – 120 kcal</option>
-<option value="180">Niouk Yen (chayote dumpling, 1 bowl) – 180 kcal</option>
-<option value="100">Jian Dui / Gato Zinzli (sesame ball, 1 piece) – 100 kcal</option>
-<option value="220">Gato Lacire (nian gao cake, 1 piece) – 220 kcal</option>
-<option value="180">Gato Lalune (moon cake, 1 piece) – 180 kcal</option>
-<option value="200">Putu (rice flour snack, 1 serving) – 200 kcal</option>
-<option value="200">Halim (1 bowl) – 200 kcal</option>
-<option value="350">Briani / Biryani (1 plate) – 350 kcal</option>
-<option value="220">Chicken Vindaye (1 serving) – 220 kcal</option>
-<option value="240">Fish Vindaye (1 serving) – 240 kcal</option>
-<option value="180">Octopus Vindaye (1 serving) – 180 kcal</option>
-<option value="300">Cari Poule (1 serving) – 300 kcal</option>
-<option value="320">Cari Cerf (deer curry, 1 serving) – 320 kcal</option>
-<option value="200">Cari Ourite (octopus curry, 1 serving) – 200 kcal</option>
-<option value="260">Cari Canard (duck curry, 1 serving) – 260 kcal</option>
-<option value="220">Achard Légumes (pickled veggies, 1 serving) – 220 kcal</option>
-<option value="180">Palmiste Salad (1 plate) – 180 kcal</option>
-<option value="180">Alouda (1 glass) – 180 kcal</option>
-<option value="180">Tamarind Juice (1 glass) – 180 kcal</option>
-<option value="160">Poudine Coco (1 piece) – 160 kcal</option>
-<option value="140">Napolitaine (1 piece) – 140 kcal</option>
-<option value="200">Mithai (Indian sweet, 1 piece) – 200 kcal</option>
-    <!-- More options -->
-  </select>
-  <input type="number" id="quantity" placeholder="Quantity" />
-  <button onclick="addCalories()">Add Food</button>
-  <p><strong>Total Calories: <span id="totalCalories">0</span> kcal</strong></p>
-</section>
-
-<!-- Contact Section -->
-<section id="contact" class="contact-section">
-  <div class="contact-container">
-    <h2 class="section-title">✨ Get In Touch ✨</h2>
-    <div class="contact-card">
-      <!-- Contact Info -->
-      <div class="contact-info">
-        <div class="contact-method piano-key">
-          <div class="icon-wrapper">📍</div>
-          <div class="contact-details">
-            <h3>Our Location</h3>
-            <p>Camp Yoloff, Port Louis, Mauritius</p>
-          </div>
-        </div>
-        <div class="contact-method piano-key">
-          <div class="icon-wrapper">📞</div>
-          <div class="contact-details">
-            <h3>Phone</h3>
-            <p><a href="tel:+23058127138">+230 5812 7138</a></p>
-          </div>
-        </div>
-      </div>
-      <!-- Social Media -->
-      <div class="contact-social">
-        <div class="contact-method piano-key">
-          <div class="icon-wrapper">💬</div>
-          <div class="contact-details">
-            <h3>WhatsApp</h3>
-            <p><a href="https://wa.me/23058127138" target="_blank">Message Now</a></p>
-          </div>
-        </div>
-        <div class="contact-method piano-key">
-          <div class="icon-wrapper">👍</div>
-          <div class="contact-details">
-            <h3>Facebook</h3>
-            <p><a href="https://www.facebook.com/profile.php?id=61562754817780" target="_blank">Visit Profile</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <p>© 2025 Salman K Abdool. All rights reserved.</p>
-  <p>
-    <a href="#shop">Shop</a> |
-    <a href="#community">Community</a> |
-    <a href="#contact">Contact</a>
-  </p>
-</footer>
-
-<!-- Cursor Light Effect -->
-<div class="cursor-light"></div>
-
-<script>
-  // Spin Wheel Logic
-  const wheel = document.getElementById("wheel");
-  const ctx = wheel.getContext("2d");
-  const spinBtn = document.getElementById("spin-btn");
-  const rewardModal = document.getElementById("reward-modal");
-  const rewardText = document.getElementById("reward-text");
-  const shopBtn = document.getElementById("shop-btn");
-  const closeModal = document.getElementById("close-modal");
-
-  const segments = [
-    { label: "5% OFF", color: "#ff6b6b" },
-    { label: "7% OFF", color: "#feca57" },
-    { label: "10% OFF", color: "#48dbfb" },
-    { label: "15% OFF", color: "#1dd1a1" },
-    { label: "Buy 2 Get 1 Free", color: "#5f27cd" },
-    { label: "Try Again", color: "#576574" }
-  ];
-
-  const radius = 150;
-  const totalSegments = segments.length;
-  let angle = 0;
-  let spinning = false;
-
-  function drawWheel() {
-    ctx.clearRect(0, 0, wheel.width, wheel.height);
-    for (let i = 0; i < totalSegments; i++) {
-      const start = angle + (i * 2 * Math.PI) / totalSegments;
-      const end = start + (2 * Math.PI) / totalSegments;
-      ctx.beginPath();
-      ctx.fillStyle = segments[i].color;
-      ctx.moveTo(radius, radius);
-      ctx.arc(radius, radius, radius, start, end);
-      ctx.fill();
-      ctx.save();
-      ctx.translate(radius, radius);
-      ctx.rotate(start + Math.PI / totalSegments);
-      ctx.fillStyle = "#fff";
-      ctx.font = "14px sans-serif";
-      ctx.textAlign = "right";
-      ctx.fillText(segments[i].label, radius - 10, 10);
-      ctx.restore();
-    }
-  }
-  drawWheel();
-
-  function canSpin() {
-    const lastSpin = localStorage.getItem("lastSpinTime");
-    if (!lastSpin) return true;
-    const diff = Date.now() - parseInt(lastSpin, 10);
-    return diff > 60 * 60 * 1000; // 1 hour
-  }
-
-  function setLastSpinTime() {
-    localStorage.setItem("lastSpinTime", Date.now().toString());
-  }
-
-  function spinWheel() {
-    if (spinning) return;
-    if (!canSpin()) {
-      alert("🕒 Please wait 1 hour before your next spin!");
-      return;
-    }
-
-    spinning = true;
-    spinBtn.disabled = true;
-    let rotation = 0;
-    const target = 360 * 5 + Math.floor(Math.random() * 360);
-    const duration = 3000;
-    const start = performance.now();
-
-    function animate(time) {
-      const elapsed = time - start;
-      const progress = Math.min(elapsed / duration, 1);
-      rotation = progress * target;
-      ctx.save();
-      ctx.translate(radius, radius);
-      ctx.rotate((rotation * Math.PI) / 180);
-      ctx.translate(-radius, -radius);
-      drawWheel();
-      ctx.restore();
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      } else {
-        const finalAngle = rotation % 360;
-        const index = Math.floor(totalSegments - (finalAngle / 360) * totalSegments) % totalSegments;
-        const reward = segments[index];
-
-        setLastSpinTime();
-        if (reward.label === "Try Again") {
-          alert("😢 Try again in 1 hour!");
-        } else {
-          rewardText.textContent = reward.label;
-          rewardModal.style.display = "flex";
-        }
-        spinBtn.disabled = false;
-        spinning = false;
-      }
-    }
-    requestAnimationFrame(animate);
-  }
-
-  spinBtn.addEventListener("click", spinWheel);
-  shopBtn.addEventListener("click", () => {
-    window.location.href = "#shop";
-    rewardModal.style.display = "none";
-  });
-  closeModal.addEventListener("click", () => {
-    rewardModal.style.display = "none";
-  });
-
-
-
-  // BMI Calculator
-  function calcBMI() {
-    const w = parseFloat(document.getElementById('weight').value);
-    const h = parseFloat(document.getElementById('height').value) / 100;
-    const result = document.getElementById('bmiResult');
-    if (w > 0 && h > 0) {
-      const bmi = w / (h * h);
-      let category = '';
-      if (bmi < 18.5) category = 'Underweight';
-      else if (bmi < 25) category = 'Normal';
-      else if (bmi < 30) category = 'Overweight';
-      else category = 'Obese';
-      result.textContent = `BMI: ${bmi.toFixed(2)} (${category})`;
-    } else {
-      result.textContent = 'Enter valid values.';
-    }
-  }
-
-  // Calories Tracker
-  let totalCalories = 0;
-  function addCalories() {
-    const foodSelect = document.getElementById('foodSelect');
-    const quantity = parseFloat(document.getElementById('quantity').value);
-    const calPerUnit = parseFloat(foodSelect.value);
-    if (!calPerUnit || isNaN(quantity)) return;
-    const cal = calPerUnit * quantity;
-    totalCalories += cal;
-    document.getElementById('totalCalories').textContent = totalCalories.toFixed(2);
-    document.getElementById('quantity').value = '';
-  }
-
-  // Cursor light effect
-  document.addEventListener('mousemove', (e) => {
-    const light = document.querySelector('.cursor-light');
-    light.style.left = `${e.clientX}px`;
-    light.style.top = `${e.clientY}px`;
-  });
-  
-  document.addEventListener('touchmove', (e) => {
-    const light = document.querySelector('.cursor-light');
-    light.style.left = `${e.touches[0].clientX}px`;
-    light.style.top = `${e.touches[0].clientY}px`;
-  });
-
-  // Profile image glow interaction
-  document.querySelector('.hero-img img').addEventListener('click', function() {
-    this.style.animation = 'none';
-    void this.offsetWidth;
-    this.style.animation = 'intenseGlow 2s ease-out';
-  });
-  
-  document.querySelector('.hero-img img').addEventListener('touchstart', function() {
-    this.style.animation = 'none';
-    void this.offsetWidth;
-    this.style.animation = 'intenseGlow 2s ease-out';
-  });
-
-  // Initialize game
-  update();
-</script>
-<footer style="background:#111; color:#eee; padding:20px; font-family:sans-serif; text-align:center; user-select:none; max-width:360px; margin:auto; position: relative;">
-
-  <h2 style="margin-bottom:10px; color:#e53935;">🔥 Fitness Tap Challenge - Hard Mode 🔥</h2>
-
-  <p>Time left: <span id="timer">30</span>s | Score: <span id="score">0</span> | Combo: <span id="combo">x1</span></p>
-  <p>Power-up: <span id="powerup">None</span></p>
-
-  <div id="gameArea" 
-       style="position:relative; margin:20px auto; background:#222; width:320px; height:180px; border-radius:10px; overflow:hidden; border:3px solid #e53935; box-shadow: 0 0 15px #e53935; cursor:pointer; touch-action: manipulation;">
-  </div>
-
-  <button id="startBtn" 
-          style="padding:12px 30px; font-size:18px; background:#e53935; border:none; border-radius:8px; color:#fff; cursor:pointer; font-weight:bold;">
-    Start Hard Workout
-  </button>
-
-  <div id="badgeContainer" style="position:absolute; top:10px; left:50%; transform: translateX(-50%); pointer-events:none;"></div>
-
-<script>
-(() => {
-  const gameArea = document.getElementById('gameArea');
-  const timerDisplay = document.getElementById('timer');
-  const scoreDisplay = document.getElementById('score');
-  const comboDisplay = document.getElementById('combo');
-  const powerupDisplay = document.getElementById('powerup');
-  const startBtn = document.getElementById('startBtn');
-  const badgeContainer = document.getElementById('badgeContainer');
-
-  const targetEmojis = ['🥤', '🏋️‍♂️', '🥊', '💪'];
-  const powerupEmojis = ['⭐', '⏳']; // double points, freeze time
-  const hazardEmojis = ['💣', '⚡']; // bomb, shock
-  const decoyEmojis = ['👻', '❌']; // decoys to avoid
-
-  let timeLeft = 30;
-  let score = 0;
-  let combo = 1;
-  let comboCount = 0;
-  let powerupActive = null;
-  let powerupTimer = 0;
-  let comboTimeout = null;
-  let gameInterval;
-  let targets = [];
-  let freezeTime = false;
-
-  const maxTargets = 6;
-  const gameWidth = gameArea.clientWidth;
-  const gameHeight = gameArea.clientHeight;
-
-  // Base sizes and shrink speed variables for difficulty scaling
-  const baseMaxSize = 55;
-  const baseMinSize = 15;
-  let shrinkSpeedBase = 0.8; // starting shrink speed
-  let spawnIntervalTime = 900; // in ms
-
-  function randRange(min, max) {
-    return Math.random() * (max - min) + min;
-  }
-
-  function showBadge(text) {
-    const badge = document.createElement('div');
-    badge.textContent = text;
-    badge.style.background = '#e53935';
-    badge.style.padding = '6px 12px';
-    badge.style.marginTop = '5px';
-    badge.style.borderRadius = '8px';
-    badge.style.color = '#fff';
-    badge.style.fontWeight = 'bold';
-    badge.style.opacity = '1';
-    badge.style.transition = 'opacity 1.5s ease-out, transform 1.5s ease-out';
-    badgeContainer.appendChild(badge);
-    setTimeout(() => {
-      badge.style.opacity = '0';
-      badge.style.transform = 'translateY(-40px)';
-    }, 100);
-    setTimeout(() => badgeContainer.removeChild(badge), 1600);
-  }
-
-  function updateCombo() {
-    if (comboCount < 3) combo = 1;
-    else if (comboCount < 6) combo = 2;
-    else if (comboCount < 10) combo = 3;
-    else combo = 5;
-    comboDisplay.textContent = 'x' + combo;
-
-    // Reset combo if not hit a target in 3 seconds
-    if (comboTimeout) clearTimeout(comboTimeout);
-    comboTimeout = setTimeout(() => {
-      comboCount = 0;
-      combo = 1;
-      comboDisplay.textContent = 'x1';
-    }, 3000);
-  }
-
-  function createEntity(type) {
-    if (targets.length >= maxTargets) return;
-    const entity = document.createElement('div');
-    entity.style.position = 'absolute';
-    entity.style.userSelect = 'none';
-    entity.style.textAlign = 'center';
-
-    // Smaller size for decoys and some targets
-    let size = baseMaxSize;
-    if (type === 'decoy') size = randRange(25, 40);
-    else if (Math.random() < 0.3) size = randRange(25, baseMaxSize);
-
-    entity.style.fontSize = `${size - 15}px`;
-    entity.style.width = `${size}px`;
-    entity.style.height = `${size}px`;
-    entity.style.lineHeight = `${size}px`;
-    entity.style.borderRadius = '50%';
-
-    entity.style.background = type === 'hazard' ? '#a83232' : (type === 'powerup' ? '#f5d742' : (type === 'decoy' ? '#555' : '#d32f2f'));
-    entity.style.color = '#fff';
-    entity.style.cursor = 'pointer';
-    entity.style.boxShadow = '0 0 10px rgba(0,0,0,0.7)';
-    entity.style.transition = 'transform 0.1s ease';
-
-    const x = randRange(0, gameWidth - size);
-    const y = randRange(0, gameHeight - size);
-    entity.style.left = `${x}px`;
-    entity.style.top = `${y}px`;
-
-    if (type === 'normal') {
-      entity.textContent = targetEmojis[Math.floor(Math.random() * targetEmojis.length)];
-      entity.dataset.type = 'normal';
-    } else if (type === 'powerup') {
-      entity.textContent = powerupEmojis[Math.floor(Math.random() * powerupEmojis.length)];
-      entity.dataset.type = 'powerup';
-    } else if (type === 'hazard') {
-      entity.textContent = hazardEmojis[Math.floor(Math.random() * hazardEmojis.length)];
-      entity.dataset.type = 'hazard';
-    } else if (type === 'decoy') {
-      entity.textContent = decoyEmojis[Math.floor(Math.random() * decoyEmojis.length)];
-      entity.dataset.type = 'decoy';
-    }
-    entity.dataset.size = size;
-    entity.shrinkSpeed = shrinkSpeedBase + Math.random(); // faster shrink speed on hard mode
-
-    entity.onclick = e => {
-      e.stopPropagation();
-      if (entity.dataset.type === 'normal') {
-        let points = 1 * combo;
-        if (powerupActive === 'double') points *= 2;
-        score += points;
-        comboCount++;
-        updateCombo();
-        scoreDisplay.textContent = score;
-        showBadge(`+${points}`);
-
-        gameArea.removeChild(entity);
-        targets = targets.filter(t => t !== entity);
-      } else if (entity.dataset.type === 'powerup') {
-        activatePowerup(entity.textContent);
-        gameArea.removeChild(entity);
-        targets = targets.filter(t => t !== entity);
-        comboCount = 0;
-        updateCombo();
-      } else if (entity.dataset.type === 'hazard') {
-        if (entity.textContent === '💣') {
-          score = Math.max(0, score - 3);
-          showBadge('💣 Bomb! -3 points');
-        } else if (entity.textContent === '⚡') {
-          timeLeft = Math.max(0, timeLeft - 5);
-          showBadge('⚡ Shock! -5s');
-        }
-        scoreDisplay.textContent = score;
-        gameArea.removeChild(entity);
-        targets = targets.filter(t => t !== entity);
-        comboCount = 0;
-        updateCombo();
-      } else if (entity.dataset.type === 'decoy') {
-        // Decoys reset combo and reduce points
-        comboCount = 0;
-        score = Math.max(0, score - 2);
-        scoreDisplay.textContent = score;
-        showBadge('❌ Decoy! Combo reset & -2 points');
-        gameArea.removeChild(entity);
-        targets = targets.filter(t => t !== entity);
-        updateCombo();
-      }
-    };
-
-    gameArea.appendChild(entity);
-    targets.push(entity);
-  }
-
-  function activatePowerup(emoji) {
-    if (emoji === '⭐') {
-      powerupActive = 'double';
-      powerupTimer = 7;
-      powerupDisplay.textContent = 'Double Points ⭐';
-    } else if (emoji === '⏳') {
-      powerupActive = 'freeze';
-      powerupTimer = 4;
-      powerupDisplay.textContent = 'Freeze Time ⏳';
-      freezeTime = true;
-    }
-  }
-
-  function shrinkTargets() {
-    targets.forEach(target => {
-      let size = parseFloat(target.dataset.size);
-      size -= target.shrinkSpeed;
-      if (size <= baseMinSize) {
-        if (target.dataset.type === 'normal' && !freezeTime) {
-          comboCount = 0;
-          updateCombo();
-          score = Math.max(0, score - 2);
-          scoreDisplay.textContent = score;
-          showBadge('Missed target! -2 points');
-        }
-        if (gameArea.contains(target)) gameArea.removeChild(target);
-        targets = targets.filter(t => t !== target);
-      } else {
-        target.dataset.size = size;
-        target.style.width = `${size}px`;
-        target.style.height = `${size}px`;
-        target.style.lineHeight = `${size}px`;
-        target.style.fontSize = `${size - 15}px`;
-      }
-    });
-  }
-
-  function gameTick() {
-    if (!freezeTime) timeLeft--;
-    timerDisplay.textContent = timeLeft;
-
-    // Increase difficulty gradually
-    shrinkSpeedBase += 0.01; 
-    spawnIntervalTime = Math.max(300, spawnIntervalTime - 10);
-
-    if (powerupTimer > 0) {
-      powerupTimer--;
-    } else {
-      if (powerupActive === 'double') {
-        powerupDisplay.textContent = 'None';
-        powerupActive = null;
-      } else if (powerupActive === 'freeze') {
-        powerupDisplay.textContent = 'None';
-        powerupActive = null;
-        freezeTime = false;
-      }
-    }
-
-    shrinkTargets();
-
-    // Spawn targets, hazards, power-ups, and decoys
-    if (targets.length < maxTargets) {
-      const roll = Math.random();
-      if (roll < 0.5) createEntity('normal');
-      else if (roll < 0.65) createEntity('powerup');
-      else if (roll < 0.85) createEntity('hazard');
-      else createEntity('decoy');
-    }
-
-    if (timeLeft <= 0) {
-      clearInterval(gameInterval);
-      showBadge('🏆 Workout Complete!');
-      startBtn.disabled = false;
-    }
-  }
-
-  function startGame() {
-    timeLeft = 30;
-    score = 0;
-    combo = 1;
-    comboCount = 0;
-    powerupActive = null;
-    powerupTimer = 0;
-    freezeTime = false;
-    shrinkSpeedBase = 0.8;
-    spawnIntervalTime = 900;
-
-    timerDisplay.textContent = timeLeft;
-    scoreDisplay.textContent = score;
-    comboDisplay.textContent = 'x1';
-    powerupDisplay.textContent = 'None';
-
-    targets.forEach(t => {
-      if (gameArea.contains(t)) gameArea.removeChild(t);
-    });
-    targets = [];
-
-    startBtn.disabled = true;
-    gameInterval = setInterval(gameTick, 1000);
-  }
-
-  startBtn.onclick = startGame;
-})();
-</script>
-
-</footer>
-<footer style="background:#111; color:#eee; padding:20px; font-family:sans-serif; text-align:center; max-width:360px; margin:auto; border-radius:10px; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
-  <h3 style="color:#e53935; margin-bottom:12px;">💪 Fitness Quote of the Moment 💪</h3>
-  <p id="fitnessQuote" style="font-style: italic; font-size: 18px; min-height: 70px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center;"></p>
-  <button id="newQuoteBtn" 
-          style="padding: 10px 20px; background: #e53935; border:none; border-radius: 6px; color: white; font-weight: bold; cursor:pointer; transition: all 0.3s ease;"
-          onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 10px rgba(229, 57, 53, 0.7)';"
-          onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
-    New Quote
-  </button>
-</footer>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const quotes = [
-    "No pain, no gain.",
-    "Sweat is fat crying.",
-    "Push yourself because no one else is going to do it for you.",
-    "Don’t limit your challenges, challenge your limits.",
-    "Train insane or remain the same.",
-    "Your body can stand almost anything. It’s your mind that you have to convince.",
-    "Success starts with self-discipline.",
-    "Don’t stop when you’re tired. Stop when you’re done.",
-    "The hardest lift of all is lifting your butt off the couch.",
-    "The only bad workout is the one that didn’t happen.",
-    "What seems impossible today will one day become your warm-up.",
-    "Strive for progress, not perfection.",
-    "The pain you feel today will be the strength you feel tomorrow.",
-    "Work hard in silence, let success be your noise.",
-    "If it doesn’t challenge you, it won’t change you.",
-    "Fitness is like a relationship. You can’t cheat and expect it to work.",
-    "Don’t count the days, make the days count.",
-    "The body achieves what the mind believes.",
-    "Wake up with determination. Go to bed with satisfaction.",
-    "Exercise is a celebration of what your body can do.",
-    "You are stronger than you think.",
-    "Motivation is what gets you started. Habit is what keeps you going.",
-    "Don’t wish for it. Work for it.",
-    "Success is what comes after you stop making excuses.",
-    "If it was easy, everyone would do it.",
-    "Fitness isn’t a seasonal hobby, it’s a lifestyle.",
-    "Your limitation—it’s only your imagination.",
-    "Push harder than yesterday if you want a different tomorrow.",
-    "Sweat now, shine later.",
-    "Be stronger than your strongest excuse.",
-    "Fitness is not about being better than someone else; it’s about being better than you used to be.",
-    "You don’t have to be extreme, just consistent.",
-    "Small steps every day lead to big results.",
-    "A year from now you may wish you had started today.",
-    "When you feel like quitting, think about why you started.",
-    "Pain is temporary, pride is forever.",
-    "The difference between try and triumph is just a little umph!",
-    "Champions aren’t made in gyms. Champions are made from something they have deep inside them.",
-    "The mind is the limit. As long as the mind can envision it, you can do it.",
-    "Don’t limit yourself to what you think you can do.",
-    "You don’t get the ass you want by sitting on it.",
-    "The best project you’ll ever work on is you.",
-    "Your health is an investment, not an expense.",
-    "Some people want it to happen, some wish it would happen, others make it happen.",
-    "Don’t let yesterday take up too much of today.",
-    "Work hard. Dream big. Never give up.",
-    "Strong is the new sexy.",
-    "Act like a lady, lift like a boss.",
-    "Good things come to those who sweat.",
-    "Be proud, but never satisfied.",
-    "Discipline is choosing between what you want now and what you want most.",
-    "The only workout you regret is the one you didn't do.",
-    "Rome wasn't built in a day, but they worked on it every day.",
-    "You don't have to be perfect, just better than yesterday.",
-    "Excuses don't burn calories.",
-    "Make sweat your best accessory.",
-    "The secret of getting ahead is getting started.",
-    "Your speed doesn't matter, forward is forward.",
-    "Fall in love with taking care of your body.",
-    "Energy and persistence conquer all things."
-  ];
-
-  const quoteElem = document.getElementById('fitnessQuote');
-  const btn = document.getElementById('newQuoteBtn');
-
-  function showRandomQuote() {
-    const index = Math.floor(Math.random() * quotes.length);
-    quoteElem.textContent = `"${quotes[index]}"`;
-    quoteElem.style.animation = 'none';
-    void quoteElem.offsetWidth; // Trigger reflow
-    quoteElem.style.animation = 'fadeIn 0.8s ease';
-  }
-
-  btn.addEventListener('click', showRandomQuote);
-  
-  // Show initial quote
-  showRandomQuote();
 });
-</script>
-<div id="wa-chat-widget">
-  <!-- Closed State -->
-  <div id="wa-launcher">
-    <div class="unread-pulse"></div>
-    <div class="wa-icon">💬</div>
-    <div class="wa-text">
-      <div class="wa-title">Chat with Us</div>
-      <div class="wa-subtitle">Typically replies in 2 minutes</div>
-    </div>
-  </div>
+document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('sidebar').classList.toggle('open'));
 
-  <!-- Chat Window -->
-  <div id="wa-chat-window">
-    <div class="chat-header">
-      <div class="header-info">
-        <div class="wa-avatar">👕</div>
-        <div>
-          <div class="chat-title">Tee Support</div>
-          <div class="chat-status">Online now</div>
+/* ============== THEME ============== */
+function applyTheme(){
+  document.body.setAttribute('data-theme', DB.settings.theme);
+  document.getElementById('toggleTheme').textContent = DB.settings.theme==='dark' ? '🌙 Dark' : '☀️ Light';
+}
+document.getElementById('toggleTheme').addEventListener('click', ()=>{
+  DB.settings.theme = DB.settings.theme==='dark' ? 'light':'dark';
+  saveData(); applyTheme();
+});
+
+/* ============== WHATSAPP ============== */
+function applyWA(){
+  document.getElementById('waFloat').onclick = ()=> window.open('https://wa.me/'+DB.settings.whatsapp,'_blank');
+}
+
+/* ============== STAT CARDS ============== */
+function renderDashboard(){
+  const now = new Date();
+  const ym = now.toISOString().slice(0,7);
+  const bookings = DB.events.filter(e=>e.type==='booking');
+  const blocked = DB.events.filter(e=>e.type==='blocked');
+  const owner = DB.events.filter(e=>e.type==='owner');
+  const maint = DB.events.filter(e=>e.type==='maintenance');
+  let maintDays=0; maint.forEach(m=> maintDays += eachDate(m.start,m.end).length);
+
+  const daysInMonth = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
+  let occupied = 0;
+  for(let d=1; d<=daysInMonth; d++){
+    const dateStr = fmtDate(new Date(now.getFullYear(), now.getMonth(), d));
+    if(DB.events.some(e=> (e.type==='booking'||e.type==='blocked'||e.type==='owner'||e.type==='maintenance') && dateStr>=e.start && dateStr<=e.end)) occupied++;
+  }
+  const occPct = Math.round((occupied/daysInMonth)*100);
+
+  const todayStr = fmtDate(now);
+  const upcoming = bookings.filter(b=> b.start >= todayStr).sort((a,b)=>a.start.localeCompare(b.start)).slice(0,5);
+
+  const cards = [
+    {ico:'📋',val:bookings.length,lbl:'Total Bookings'},
+    {ico:'🚫',val:blocked.length,lbl:'Blocked Dates'},
+    {ico:'🛏️',val:owner.length,lbl:'Owner Stays'},
+    {ico:'🛠️',val:maintDays,lbl:'Maintenance Days'},
+    {ico:'📈',val:occPct+'%',lbl:'Occupancy (This Month)'},
+    {ico:'🛫',val:upcoming.length,lbl:'Upcoming Arrivals'},
+  ];
+  document.getElementById('statCards').innerHTML = cards.map(c=>`
+    <div class="card stat-card"><div class="ico">${c.ico}</div><div class="val">${c.val}</div><div class="lbl">${c.lbl}</div></div>
+  `).join('');
+
+  // mini cal = small render of current month calendar (reuse calendar render but in a div)
+  document.getElementById('miniCalWrap').innerHTML = buildCalendarHTML(now.getFullYear(), now.getMonth(), true);
+
+  document.getElementById('dashFeed').innerHTML = DB.log.slice(0,6).map(l=>`
+    <div class="feed-item"><div class="feed-dot"></div><div><div>${l.text}</div><div class="feed-time">${new Date(l.time).toLocaleString()}</div></div></div>
+  `).join('') || '<div style="color:var(--muted);font-size:13px;">No activity yet.</div>';
+}
+
+/* ============== CALENDAR ============== */
+let calYear, calMonth;
+const now0 = new Date();
+calYear = now0.getFullYear(); calMonth = now0.getMonth();
+
+function statusForDate(dateStr){
+  const ev = DB.events.find(e=> e.type!=='note' && dateStr>=e.start && dateStr<=e.end);
+  if(!ev) return null;
+  return ev;
+}
+
+function buildCalendarHTML(year, month, mini){
+  const first = new Date(year, month, 1);
+  const startDow = first.getDay();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const prevDays = new Date(year, month, 0).getDate();
+  const todayStr = fmtDate(new Date());
+
+  let cells = [];
+  for(let i=startDow-1;i>=0;i--){
+    cells.push({day: prevDays-i, other:true});
+  }
+  for(let d=1; d<=daysInMonth; d++){
+    cells.push({day:d, other:false, full: fmtDate(new Date(year,month,d))});
+  }
+  while(cells.length % 7 !== 0){
+    const idx = cells.length - (startDow+daysInMonth);
+    cells.push({day: idx+1, other:true});
+  }
+
+  const dow = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let html = '';
+  if(!mini){
+    document.getElementById('calDow').innerHTML = dow.map(d=>`<div class="cal-dow">${d}</div>`).join('');
+  }
+  html += cells.map(c=>{
+    if(c.other) return `<div class="cal-day other"><div class="dnum">${c.day}</div></div>`;
+    const dateStr = c.full;
+    const dayEvents = DB.events.filter(e=> dateStr>=e.start && dateStr<=e.end);
+    const isToday = dateStr===todayStr;
+    const evtsHtml = dayEvents.slice(0,mini?1:3).map(e=>{
+      const cls = e.type==='booking'?'reserved':e.type==='blocked'?'blocked':e.type==='owner'?'owner':e.type==='maintenance'?'maintenance':'note';
+      const label = e.type==='booking'? (e.guest||'Booking') : e.type==='blocked'? (e.reason||'Blocked') : e.type==='owner'? 'Owner Stay' : e.type==='maintenance'? (e.reason||'Maintenance') : (e.notes||'Note');
+      return `<div class="evt ${cls}">${label}</div>`;
+    }).join('');
+    return `<div class="cal-day ${isToday?'today':''}" data-date="${dateStr}" onclick="openDayModal('${dateStr}')">
+      <div class="dnum">${c.day}</div>
+      <div class="events">${evtsHtml}</div>
+    </div>`;
+  }).join('');
+  return html;
+}
+
+function renderCalendar(){
+  document.getElementById('calMonthLabel').textContent = new Date(calYear,calMonth).toLocaleString('en-GB',{month:'long',year:'numeric'});
+  document.getElementById('calDow').innerHTML = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div class="cal-dow">${d}</div>`).join('');
+  document.getElementById('calGrid').innerHTML = buildCalendarHTML(calYear, calMonth, false);
+  if(document.getElementById('bulkRows') && document.getElementById('bulkRows').children.length===0){
+    addBulkRow();
+  }
+}
+document.getElementById('prevMonth').addEventListener('click',()=>{ calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderCalendar(); });
+document.getElementById('nextMonth').addEventListener('click',()=>{ calMonth++; if(calMonth>11){calMonth=0;calYear++;} renderCalendar(); });
+document.getElementById('todayBtn').addEventListener('click',()=>{ const n=new Date(); calYear=n.getFullYear(); calMonth=n.getMonth(); renderCalendar(); });
+function populateBulkAdminSelect(){
+  const sel = document.getElementById('bulkBlockAdmin');
+  if(sel) sel.innerHTML = ADMINS.map(a=>`<option ${a===DB.settings.defaultAdmin?'selected':''}>${a}</option>`).join('');
+}
+
+let bulkRowCount = 0;
+function addBulkRow(fromVal, toVal){
+  bulkRowCount++;
+  const rowId = 'bulkrow_'+bulkRowCount;
+  const wrap = document.createElement('div');
+  wrap.className = 'form-grid';
+  wrap.id = rowId;
+  wrap.style.marginBottom = '8px';
+  wrap.style.alignItems = 'end';
+  wrap.innerHTML = `
+    <div class="form-row"><label>From Date</label><input type="date" class="bulk-from" value="${fromVal||''}"></div>
+    <div class="form-row" style="display:flex;gap:8px;align-items:center;">
+      <div style="flex:1;"><label>To Date</label><input type="date" class="bulk-to" value="${toVal||''}"></div>
+      <button class="icon-btn" title="Remove this line" onclick="document.getElementById('${rowId}').remove()" style="font-size:18px;margin-top:18px;">🗑️</button>
+    </div>
+  `;
+  document.getElementById('bulkRows').appendChild(wrap);
+}
+document.getElementById('addBulkRowBtn').addEventListener('click', ()=> addBulkRow());
+
+document.getElementById('bulkBlockBtn').addEventListener('click', ()=>{
+  const reason = document.getElementById('bulkBlockReason').value || 'Blocked';
+  const managedBy = document.getElementById('bulkBlockAdmin').value || DB.settings.defaultAdmin;
+  const fromInputs = document.querySelectorAll('#bulkRows .bulk-from');
+  const toInputs = document.querySelectorAll('#bulkRows .bulk-to');
+
+  let success = [], failed = [], conflicts = [];
+
+  fromInputs.forEach((fromEl, i)=>{
+    const start = fromEl.value;
+    const end = toInputs[i].value || start;
+    if(!start){ return; } // skip empty rows silently
+    if(end < start){ failed.push(`${start} (To date is before From date)`); return; }
+    const conflict = blockingEventsOnRange(start, end);
+    if(conflict.length){ conflicts.push(`${pretty(start)} → ${pretty(end)}`); return; }
+    const ev = { id: uid(), type:'blocked', start, end, reason, managedBy, createdAt: new Date().toISOString() };
+    DB.events.push(ev);
+    success.push(`${pretty(start)}${end!==start? ' → '+pretty(end):''}`);
+  });
+
+  if(success.length){
+    saveData();
+    addLog(`${managedBy} blocked ${success.length} date range(s): ${success.join(', ')}`);
+  }
+
+  let resultHtml = '';
+  if(success.length) resultHtml += `<div style="color:var(--green);margin-bottom:4px;">✅ Blocked: ${success.join(' | ')}</div>`;
+  if(conflicts.length) resultHtml += `<div style="color:var(--orange);margin-bottom:4px;">⚠️ Skipped (already booked/blocked): ${conflicts.join(' | ')}</div>`;
+  if(failed.length) resultHtml += `<div style="color:var(--red);">❌ Problem: ${failed.join(' | ')}</div>`;
+  if(!success.length && !conflicts.length && !failed.length) resultHtml = `<div style="color:var(--muted);">Please fill in at least one "From Date".</div>`;
+  document.getElementById('bulkBlockResult').innerHTML = resultHtml;
+
+  if(success.length){
+    toast(`Blocked ${success.length} date range(s) successfully.`);
+    document.getElementById('bulkRows').innerHTML = '';
+    addBulkRow();
+    refreshAll();
+  }
+});
+
+document.getElementById('printCalBtn').addEventListener('click',()=> window.print());
+document.getElementById('pdfCalBtn').addEventListener('click',()=>{ toast('Use your browser Print dialog → "Save as PDF" to download the calendar.'); window.print(); });
+
+/* ============== DAY MODAL / ACTIONS ============== */
+let modalDate = null;
+
+function openDayModal(dateStr){
+  modalDate = dateStr;
+  const existing = DB.events.filter(e=> dateStr>=e.start && dateStr<=e.end);
+  const overlay = document.getElementById('overlay');
+  overlay.innerHTML = `
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3>${pretty(dateStr)}</h3>
+    <div class="sub">Choose an action for this date</div>
+    ${existing.length? `<div style="margin-bottom:14px;">
+      <div style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:6px;">EXISTING EVENTS</div>
+      ${existing.map(e=>`
+        <div class="existing-evt">
+          <div><span class="badge ${e.type==='booking'?'reserved':e.type}">${labelType(e.type)}</span> ${eventTitle(e)}</div>
+          <button class="btn btn-sm btn-danger" onclick="removeEvent('${e.id}')">Remove</button>
         </div>
-      </div>
-      <div class="close-chat">×</div>
+      `).join('')}
+    </div>` : ''}
+    <div class="action-grid">
+      <div class="action-tile" onclick="showForm('booking')"><div class="ic">🛎️</div><div class="tt">Create Booking</div></div>
+      <div class="action-tile" onclick="showForm('blocked')"><div class="ic">🚫</div><div class="tt">Block Date</div></div>
+      <div class="action-tile" onclick="showForm('owner')"><div class="ic">🛏️</div><div class="tt">Owner Stay</div></div>
+      <div class="action-tile" onclick="showForm('maintenance')"><div class="ic">🛠️</div><div class="tt">Maintenance</div></div>
+      <div class="action-tile" onclick="showForm('note')" style="grid-column:1/3;"><div class="ic">📝</div><div class="tt">Add Note</div></div>
     </div>
+    <div id="formArea"></div>
+  </div>`;
+  overlay.classList.add('show');
+}
+function labelType(t){ return t==='booking'?'Reserved':t==='blocked'?'Blocked':t==='owner'?'Owner Stay':t==='maintenance'?'Maintenance':'Note'; }
+function eventTitle(e){
+  if(e.type==='booking') return (e.guest||'Guest')+' · '+pretty(e.start)+' → '+pretty(e.end);
+  if(e.type==='note') return e.notes;
+  return (e.reason||labelType(e.type))+' · '+pretty(e.start)+' → '+pretty(e.end);
+}
+function closeModal(){ document.getElementById('overlay').classList.remove('show'); document.getElementById('overlay').innerHTML=''; }
 
-    <div class="chat-messages">
-      <div class="message bot">
-        Hi there! This chat connects directly to our WhatsApp. Ask about MMA, anime, or custom tees!
+function showForm(type){
+  const area = document.getElementById('formArea');
+  const defAdmin = document.getElementById('currentAdmin').value || DB.settings.defaultAdmin;
+  if(type==='booking'){
+    area.innerHTML = `
+      <div class="form-row"><label>Guest Name</label><input type="text" id="f_guest"></div>
+      <div class="form-grid">
+        <div class="form-row"><label>Phone Number</label><input type="tel" id="f_phone"></div>
+        <div class="form-row"><label>Email Address</label><input type="email" id="f_email"></div>
       </div>
-      <div class="message bot">
-        Type your question and we'll message you on WhatsApp immediately.
+      <div class="form-grid">
+        <div class="form-row"><label>Check-In Date</label><input type="date" id="f_in" value="${modalDate}"></div>
+        <div class="form-row"><label>Check-Out Date</label><input type="date" id="f_out"></div>
       </div>
-    </div>
-
-    <div class="chat-input">
-      <input type="text" placeholder="Type your question..." id="wa-input">
-      <button id="wa-send">
-        <svg viewBox="0 0 24 24" width="24" height="24">
-          <path fill="currentColor" d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z"></path>
-        </svg>
-      </button>
-    </div>
-  </div>
-</div>
-
-<style>
-  #wa-chat-widget {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 9999;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      <div class="form-grid">
+        <div class="form-row"><label>Number Of Guests</label><input type="number" id="f_guests" min="1" value="2"></div>
+        <div class="form-row"><label>Booking Source</label><select id="f_source">${SOURCES.map(s=>`<option>${s}</option>`).join('')}</select></div>
+      </div>
+      <div class="form-grid">
+        <div class="form-row"><label>Total Amount (${DB.settings.currency})</label><input type="number" id="f_amount" min="0" step="0.01"></div>
+        <div class="form-row"><label>Managed By</label><select id="f_managed">${ADMINS.map(a=>`<option ${a===defAdmin?'selected':''}>${a}</option>`).join('')}</select></div>
+      </div>
+      <div class="form-row"><label>Notes</label><textarea id="f_notes" rows="2"></textarea></div>
+      <div class="modal-foot"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="saveBooking()">Save Booking</button></div>
+    `;
+  } else if(type==='blocked'){
+    area.innerHTML = `
+      <div class="form-grid">
+        <div class="form-row"><label>Start Date</label><input type="date" id="f_in" value="${modalDate}"></div>
+        <div class="form-row"><label>End Date</label><input type="date" id="f_out" value="${modalDate}"></div>
+      </div>
+      <div class="form-row"><label>Reason</label><input type="text" id="f_reason" placeholder="e.g. Personal block"></div>
+      <div class="form-row"><label>Admin Name</label><select id="f_managed">${ADMINS.map(a=>`<option ${a===defAdmin?'selected':''}>${a}</option>`).join('')}</select></div>
+      <div class="modal-foot"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="saveSimple('blocked')">Block Date</button></div>
+    `;
+  } else if(type==='owner'){
+    area.innerHTML = `
+      <div class="form-grid">
+        <div class="form-row"><label>Start Date</label><input type="date" id="f_in" value="${modalDate}"></div>
+        <div class="form-row"><label>End Date</label><input type="date" id="f_out" value="${modalDate}"></div>
+      </div>
+      <div class="form-row"><label>Notes</label><textarea id="f_notes" rows="2"></textarea></div>
+      <div class="form-row"><label>Admin Name</label><select id="f_managed">${ADMINS.map(a=>`<option ${a===defAdmin?'selected':''}>${a}</option>`).join('')}</select></div>
+      <div class="modal-foot"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="saveSimple('owner')">Save Owner Stay</button></div>
+    `;
+  } else if(type==='maintenance'){
+    area.innerHTML = `
+      <div class="form-grid">
+        <div class="form-row"><label>Start Date</label><input type="date" id="f_in" value="${modalDate}"></div>
+        <div class="form-row"><label>End Date</label><input type="date" id="f_out" value="${modalDate}"></div>
+      </div>
+      <div class="form-row"><label>Reason</label><input type="text" id="f_reason" placeholder="e.g. Pool maintenance"></div>
+      <div class="form-row"><label>Admin Name</label><select id="f_managed">${ADMINS.map(a=>`<option ${a===defAdmin?'selected':''}>${a}</option>`).join('')}</select></div>
+      <div class="modal-foot"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="saveSimple('maintenance')">Save Maintenance</button></div>
+    `;
+  } else if(type==='note'){
+    area.innerHTML = `
+      <div class="form-row"><label>Note</label><textarea id="f_notes" rows="3" placeholder="Internal note for this date"></textarea></div>
+      <div class="form-row"><label>Admin Name</label><select id="f_managed">${ADMINS.map(a=>`<option ${a===defAdmin?'selected':''}>${a}</option>`).join('')}</select></div>
+      <div class="modal-foot"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="saveNote()">Save Note</button></div>
+    `;
   }
+}
 
-  /* Launcher Button */
-  #wa-launcher {
-    width: 260px;
-    height: 60px;
-    background: #ffffff;
-    border-radius: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-    display: flex;
-    align-items: center;
-    padding: 0 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+function validateRange(start,end){
+  if(!start || !end) { toast('Please fill in both dates.'); return false; }
+  if(end < start){ toast('Check-out / end date must be after start date.'); return false; }
+  return true;
+}
+
+function saveBooking(){
+  const guest = document.getElementById('f_guest').value.trim();
+  const start = document.getElementById('f_in').value;
+  const end = document.getElementById('f_out').value;
+  if(!guest){ toast('Guest name is required.'); return; }
+  if(!validateRange(start,end)) return;
+  if(blockingEventsOnRange(start,end).length){ toast('⚠️ These dates conflict with an existing booking or blocked period.'); return; }
+  const ev = {
+    id: uid(), type:'booking', start, end,
+    guest, phone: document.getElementById('f_phone').value,
+    email: document.getElementById('f_email').value,
+    guests: document.getElementById('f_guests').value,
+    source: document.getElementById('f_source').value,
+    amount: document.getElementById('f_amount').value || 0,
+    notes: document.getElementById('f_notes').value,
+    managedBy: document.getElementById('f_managed').value,
+    createdAt: new Date().toISOString()
+  };
+  DB.events.push(ev); saveData();
+  addLog(`${ev.managedBy} added booking for ${guest} (${pretty(start)} → ${pretty(end)})`);
+  toast('Booking saved.'); closeModal(); refreshAll();
+}
+
+function saveSimple(type){
+  const start = document.getElementById('f_in').value;
+  const end = document.getElementById('f_out').value;
+  if(!validateRange(start,end)) return;
+  const conflict = blockingEventsOnRange(start,end).filter(e=> !(type!=='blocked' && e.type==='blocked'));
+  if(conflict.length){ toast('⚠️ These dates conflict with an existing event.'); return; }
+  const managedBy = document.getElementById('f_managed').value;
+  const ev = { id: uid(), type, start, end, managedBy, createdAt: new Date().toISOString() };
+  if(type==='blocked'){ ev.reason = document.getElementById('f_reason').value || 'Blocked'; }
+  if(type==='maintenance'){ ev.reason = document.getElementById('f_reason').value || 'Maintenance'; }
+  if(type==='owner'){ ev.notes = document.getElementById('f_notes').value; }
+  DB.events.push(ev); saveData();
+  const verbMap = {blocked:'blocked',owner:'added owner stay for',maintenance:'added maintenance for'};
+  addLog(`${managedBy} ${verbMap[type]} ${pretty(start)}${end!==start?' → '+pretty(end):''}`);
+  toast('Saved successfully.'); closeModal(); refreshAll();
+}
+
+function saveNote(){
+  const notes = document.getElementById('f_notes').value.trim();
+  if(!notes){ toast('Note cannot be empty.'); return; }
+  const managedBy = document.getElementById('f_managed').value;
+  const ev = { id: uid(), type:'note', start: modalDate, end: modalDate, notes, managedBy, createdAt: new Date().toISOString() };
+  DB.events.push(ev); saveData();
+  addLog(`${managedBy} added a note on ${pretty(modalDate)}`);
+  toast('Note added.'); closeModal(); refreshAll();
+}
+
+function removeEvent(id){
+  const ev = DB.events.find(e=>e.id===id);
+  if(!ev) return;
+  if(!confirm('Remove this event?')) return;
+  DB.events = DB.events.filter(e=>e.id!==id);
+  saveData();
+  const adminNow = document.getElementById('currentAdmin').value;
+  addLog(`${adminNow} removed ${labelType(ev.type).toLowerCase()} (${pretty(ev.start)})`);
+  toast('Removed.');
+  closeModal(); refreshAll();
+}
+
+/* New Booking button (top) opens today's modal directly to booking form */
+document.getElementById('newBookingBtn').addEventListener('click', ()=>{
+  openDayModal(fmtDate(new Date()));
+  showForm('booking');
+});
+
+/* ============== BOOKINGS TABLE ============== */
+let currentFilter = 'all';
+function renderBookingsTable(){
+  const q = (document.getElementById('searchInput').value || '').toLowerCase();
+  let rows = DB.events.filter(e=>e.type!=='note');
+  if(currentFilter!=='all') rows = rows.filter(e=> (currentFilter==='reserved'? e.type==='booking' : e.type===currentFilter));
+  if(q){
+    rows = rows.filter(e=>{
+      return (e.guest||'').toLowerCase().includes(q) ||
+        e.start.includes(q) || e.end.includes(q) ||
+        (e.source||'').toLowerCase().includes(q) ||
+        (e.managedBy||'').toLowerCase().includes(q) ||
+        (e.reason||'').toLowerCase().includes(q);
+    });
   }
-
-  #wa-launcher:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.2);
-  }
-
-  .unread-pulse {
-    width: 12px;
-    height: 12px;
-    background: #25D366;
-    border-radius: 50%;
-    margin-right: 12px;
-    animation: pulse 1.5s infinite;
-  }
-
-  .wa-icon {
-    font-size: 24px;
-    margin-right: 12px;
-    background: #25D366;
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .wa-text {
-    flex: 1;
-  }
-
-  .wa-title {
-    font-weight: 600;
-    color: #333;
-  }
-
-  .wa-subtitle {
-    font-size: 13px;
-    color: #666;
-  }
-
-  /* Chat Window */
-  #wa-chat-window {
-    width: 320px;
-    height: 400px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
-    display: none;
-    flex-direction: column;
-    overflow: hidden;
-    position: absolute;
-    bottom: 80px;
-    right: 0;
-  }
-
-  .chat-header {
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #075E54;
-    color: white;
-  }
-
-  .header-info {
-    display: flex;
-    align-items: center;
-    color: white;
-  }
-
-  .wa-avatar {
-    font-size: 28px;
-    margin-right: 12px;
-  }
-
-  .chat-title {
-    font-weight: 600;
-  }
-
-  .chat-status {
-    font-size: 12px;
-    opacity: 0.8;
-  }
-
-  .close-chat {
-    font-size: 24px;
-    color: white;
-    opacity: 0.8;
-    cursor: pointer;
-    padding: 5px;
-  }
-
-  .chat-messages {
-    flex: 1;
-    padding: 15px;
-    overflow-y: auto;
-    background: #ECE5DD;
-  }
-
-  .message {
-    margin-bottom: 15px;
-    max-width: 80%;
-    padding: 10px 15px;
-    border-radius: 18px;
-    line-height: 1.4;
-    position: relative;
-    animation: fadeIn 0.3s ease;
-    font-size: 14px;
-  }
-
-  .bot {
-    background: white;
-    color: #111;
-    border-top-left-radius: 4px;
-    align-self: flex-start;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-  }
-
-  .chat-input {
-    display: flex;
-    padding: 10px;
-    border-top: 1px solid #ddd;
-    background: #f0f0f0;
-  }
-
-  #wa-input {
-    flex: 1;
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    border-radius: 24px;
-    outline: none;
-    font-size: 14px;
-  }
-
-  #wa-send {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #25D366;
-    color: white;
-    border: none;
-    margin-left: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
-
-  /* Animations */
-  @keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Mobile Responsiveness */
-  @media (max-width: 480px) {
-    #wa-chat-widget {
-      bottom: 10px;
-      right: 10px;
-    }
-    
-    #wa-launcher {
-      width: 60px;
-      height: 60px;
-      justify-content: center;
-    }
-    
-    .wa-text, .unread-pulse {
-      display: none;
-    }
-    
-    #wa-chat-window {
-      width: calc(100vw - 20px);
-      height: 60vh;
-      bottom: 80px;
-      right: 10px;
-    }
-  }
-</style>
-
-<script>
-  // DOM elements
-  const launcher = document.getElementById('wa-launcher');
-  const chatWindow = document.getElementById('wa-chat-window');
-  const messageInput = document.getElementById('wa-input');
-  const sendButton = document.getElementById('wa-send');
-  const closeButton = document.querySelector('.close-chat');
-  const messageContainer = document.querySelector('.chat-messages');
-
-  // WhatsApp number and message
-  const whatsappNumber = "YOUR_WHATSAPP_NUMBER"; // Include country code
-  const defaultMessage = "Hi! I saw your t-shirts and wanted to ask: ";
-
-  // Open/close chat
-  launcher.addEventListener('click', () => {
-    chatWindow.style.display = 'flex';
-    launcher.style.display = 'none';
+  rows = rows.sort((a,b)=>b.start.localeCompare(a.start));
+  document.getElementById('bookingsBody').innerHTML = rows.map(e=>{
+    const statusCls = e.type==='booking'?'reserved':e.type;
+    const label = e.type==='booking'?'Reserved':e.type==='blocked'?'Blocked':e.type==='owner'?'Owner Stay':'Maintenance';
+    return `<tr>
+      <td>${e.guest || e.reason || label}</td>
+      <td>${pretty(e.start)}</td>
+      <td>${pretty(e.end)}</td>
+      <td>${e.guests||'-'}</td>
+      <td>${e.amount? DB.settings.currency+Number(e.amount).toLocaleString(): '-'}</td>
+      <td>${e.source||'-'}</td>
+      <td>${e.managedBy||'-'}</td>
+      <td><span class="badge ${statusCls}">${label}</span></td>
+      <td>
+        <button class="icon-btn" title="View" onclick="viewEvent('${e.id}')">👁️</button>
+        <button class="icon-btn" title="Edit" onclick="editEvent('${e.id}')">✏️</button>
+        <button class="icon-btn" title="Delete" onclick="removeEvent('${e.id}')">🗑️</button>
+      </td>
+    </tr>`;
+  }).join('') || `<tr><td colspan="9" style="text-align:center;color:var(--muted);padding:24px;">No records found.</td></tr>`;
+}
+document.getElementById('searchInput').addEventListener('input', renderBookingsTable);
+document.querySelectorAll('#filterChips .chip').forEach(c=>{
+  c.addEventListener('click', ()=>{
+    document.querySelectorAll('#filterChips .chip').forEach(x=>x.classList.remove('active'));
+    c.classList.add('active'); currentFilter = c.dataset.f; renderBookingsTable();
   });
+});
 
-  closeButton.addEventListener('click', () => {
-    chatWindow.style.display = 'none';
-    launcher.style.display = 'flex';
-  });
+function viewEvent(id){
+  const e = DB.events.find(x=>x.id===id); if(!e) return;
+  alert(`Type: ${labelType(e.type)}\nDates: ${pretty(e.start)} → ${pretty(e.end)}\n` +
+    (e.guest? `Guest: ${e.guest}\nPhone: ${e.phone||'-'}\nEmail: ${e.email||'-'}\nGuests: ${e.guests||'-'}\nSource: ${e.source||'-'}\nAmount: ${e.amount?DB.settings.currency+e.amount:'-'}\n` : '') +
+    (e.reason? `Reason: ${e.reason}\n` : '') +
+    `Notes: ${e.notes||'-'}\nManaged By: ${e.managedBy||'-'}`);
+}
 
-  // Send message to WhatsApp
-  function sendToWhatsApp() {
-    const userMessage = messageInput.value.trim();
-    if (!userMessage) return;
+function editEvent(id){
+  const e = DB.events.find(x=>x.id===id); if(!e) return;
+  modalDate = e.start;
+  openDayModal(e.start);
+  setTimeout(()=>{
+    showForm(e.type==='booking'?'booking':e.type);
+    if(document.getElementById('f_in')) document.getElementById('f_in').value = e.start;
+    if(document.getElementById('f_out')) document.getElementById('f_out').value = e.end;
+    if(e.type==='booking'){
+      document.getElementById('f_guest').value = e.guest||'';
+      document.getElementById('f_phone').value = e.phone||'';
+      document.getElementById('f_email').value = e.email||'';
+      document.getElementById('f_guests').value = e.guests||2;
+      document.getElementById('f_source').value = e.source||'Other';
+      document.getElementById('f_amount').value = e.amount||'';
+      document.getElementById('f_notes').value = e.notes||'';
+      document.getElementById('f_managed').value = e.managedBy||DB.settings.defaultAdmin;
+      // override save to update instead of create
+      const btn = document.querySelector('#formArea .btn-primary');
+      btn.textContent = 'Update Booking';
+      btn.setAttribute('onclick', `updateEvent('${id}')`);
+    } else {
+      if(document.getElementById('f_reason')) document.getElementById('f_reason').value = e.reason||'';
+      if(document.getElementById('f_notes')) document.getElementById('f_notes').value = e.notes||'';
+      document.getElementById('f_managed').value = e.managedBy||DB.settings.defaultAdmin;
+      const btn = document.querySelector('#formArea .btn-primary');
+      btn.textContent = 'Update';
+      btn.setAttribute('onclick', `updateEvent('${id}')`);
+    }
+  }, 10);
+}
 
-    // Create user message bubble
-    const userBubble = document.createElement('div');
-    userBubble.className = 'message user';
-    userBubble.textContent = userMessage;
-    messageContainer.appendChild(userBubble);
-
-    // Create confirmation message
-    const botBubble = document.createElement('div');
-    botBubble.className = 'message bot';
-    botBubble.innerHTML = 'Perfect! We\'re opening WhatsApp now to continue the conversation...';
-    messageContainer.appendChild(botBubble);
-
-    // Scroll to bottom
-    messageContainer.scrollTop = messageContainer.scrollHeight;
-    messageInput.value = '';
-
-    // Encode message for WhatsApp URL
-    const encodedMessage = encodeURIComponent(defaultMessage + userMessage);
-    
-    // Open WhatsApp
-    setTimeout(() => {
-      window.open(`https://wa.me/${23058127138}?text=${encodedMessage}`, '_blank');
-    }, 1000);
+function updateEvent(id){
+  const e = DB.events.find(x=>x.id===id); if(!e) return;
+  const start = document.getElementById('f_in').value;
+  const end = document.getElementById('f_out').value;
+  if(!validateRange(start,end)) return;
+  if(blockingEventsOnRange(start,end,id).length){ toast('⚠️ Conflicts with another event.'); return; }
+  e.start = start; e.end = end;
+  if(e.type==='booking'){
+    e.guest = document.getElementById('f_guest').value;
+    e.phone = document.getElementById('f_phone').value;
+    e.email = document.getElementById('f_email').value;
+    e.guests = document.getElementById('f_guests').value;
+    e.source = document.getElementById('f_source').value;
+    e.amount = document.getElementById('f_amount').value;
+    e.notes = document.getElementById('f_notes').value;
+  } else {
+    if(document.getElementById('f_reason')) e.reason = document.getElementById('f_reason').value;
+    if(document.getElementById('f_notes')) e.notes = document.getElementById('f_notes').value;
   }
+  e.managedBy = document.getElementById('f_managed').value;
+  saveData();
+  addLog(`${e.managedBy} edited ${labelType(e.type).toLowerCase()} (${pretty(e.start)})`);
+  toast('Updated.'); closeModal(); refreshAll();
+}
 
-  // Event listeners
-  sendButton.addEventListener('click', sendToWhatsApp);
-  messageInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') sendToWhatsApp();
-  });
+/* ============== EXPORT / IMPORT / BACKUP ============== */
+function downloadJSON(obj, filename){
+  const blob = new Blob([JSON.stringify(obj,null,2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download=filename; a.click();
+  URL.revokeObjectURL(url);
+}
+document.getElementById('exportJsonBtn').addEventListener('click', ()=>downloadJSON(DB.events, 'vmoa_events.json'));
+document.getElementById('importJsonBtn').addEventListener('click', ()=>document.getElementById('importFileInput').click());
+document.getElementById('importFileInput').addEventListener('change', (ev)=>{
+  const file = ev.target.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    try{
+      const data = JSON.parse(reader.result);
+      if(Array.isArray(data)){ DB.events = DB.events.concat(data); saveData(); addLog('Imported events from JSON file'); toast('Import successful.'); refreshAll(); }
+      else toast('Invalid JSON format.');
+    }catch(e){ toast('Failed to parse JSON.'); }
+  };
+  reader.readAsText(file);
+});
+document.getElementById('backupBtn').addEventListener('click', ()=>downloadJSON(DB, 'vmoa_full_backup.json'));
+document.getElementById('restoreBtn').addEventListener('click', ()=>document.getElementById('restoreFileInput').click());
+document.getElementById('restoreFileInput').addEventListener('change', (ev)=>{
+  const file = ev.target.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    try{
+      const data = JSON.parse(reader.result);
+      if(data.events && data.settings){ DB = data; saveData(); toast('Restore successful.'); applyTheme(); applyWA(); refreshAll(); }
+      else toast('Invalid backup file.');
+    }catch(e){ toast('Failed to restore.'); }
+  };
+  reader.readAsText(file);
+});
 
-  // Mobile back button handling
-  window.addEventListener('popstate', function() {
-    chatWindow.style.display = 'none';
-    launcher.style.display = 'flex';
+/* ============== ACTIVITY LOG ============== */
+function renderFullFeed(){
+  document.getElementById('fullFeed').innerHTML = DB.log.map(l=>`
+    <div class="feed-item"><div class="feed-dot"></div><div><div>${l.text}</div><div class="feed-time">${new Date(l.time).toLocaleString()}</div></div></div>
+  `).join('') || '<div style="color:var(--muted);font-size:13px;">No activity recorded yet.</div>';
+}
+document.getElementById('clearLogBtn').addEventListener('click', ()=>{
+  if(confirm('Permanently clear the entire activity log? This cannot be undone.')){
+    DB.log = []; saveData(); renderFullFeed(); toast('Activity log cleared.');
+  }
+});
+
+/* ============== ANALYTICS ============== */
+let chartRefs = {};
+function renderAnalytics(){
+  Object.values(chartRefs).forEach(c=>c && c.destroy());
+  const months = [];
+  const now = new Date();
+  for(let i=5;i>=0;i--){
+    const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+    months.push({label:d.toLocaleString('en-GB',{month:'short',year:'2-digit'}), year:d.getFullYear(), month:d.getMonth()});
+  }
+  const occData = months.map(m=>{
+    const daysInMonth = new Date(m.year, m.month+1, 0).getDate();
+    let occ=0;
+    for(let d=1; d<=daysInMonth; d++){
+      const ds = fmtDate(new Date(m.year,m.month,d));
+      if(DB.events.some(e=> e.type!=='note' && ds>=e.start && ds<=e.end)) occ++;
+    }
+    return Math.round((occ/daysInMonth)*100);
   });
+  const revData = months.map(m=>{
+    return DB.events.filter(e=>e.type==='booking' && new Date(e.start).getFullYear()===m.year && new Date(e.start).getMonth()===m.month)
+      .reduce((s,e)=>s+Number(e.amount||0),0);
+  });
+  const trendData = months.map(m=>{
+    return DB.events.filter(e=>e.type==='booking' && new Date(e.start).getFullYear()===m.year && new Date(e.start).getMonth()===m.month).length;
+  });
+  const sourceCounts = {};
+  SOURCES.forEach(s=>sourceCounts[s]=0);
+  DB.events.filter(e=>e.type==='booking').forEach(e=>{ sourceCounts[e.source]=(sourceCounts[e.source]||0)+1; });
+
+  const gold = '#c9a24b';
+  chartRefs.occ = new Chart(document.getElementById('chartOccupancy'), {
+    type:'bar', data:{labels: months.map(m=>m.label), datasets:[{label:'Occupancy %', data:occData, backgroundColor:gold, borderRadius:6}]},
+    options:{plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true,max:100}}}
+  });
+  chartRefs.src = new Chart(document.getElementById('chartSources'), {
+    type:'doughnut', data:{labels:Object.keys(sourceCounts), datasets:[{data:Object.values(sourceCounts), backgroundColor:['#c9a24b','#4fa3e0','#3ec77a','#ef5b6f','#f0a649','#6c5dd3','#8a8f9c']}]},
+    options:{plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{size:10}}}}}
+  });
+  chartRefs.rev = new Chart(document.getElementById('chartRevenue'), {
+    type:'line', data:{labels: months.map(m=>m.label), datasets:[{label:'Revenue ('+DB.settings.currency+')', data:revData, borderColor:'#4fa3e0', backgroundColor:'rgba(79,163,224,0.15)', fill:true, tension:.35}]},
+    options:{plugins:{legend:{display:false}}}
+  });
+  chartRefs.trend = new Chart(document.getElementById('chartTrends'), {
+    type:'line', data:{labels: months.map(m=>m.label), datasets:[{label:'Reservations', data:trendData, borderColor:'#3ec77a', backgroundColor:'rgba(62,199,122,0.15)', fill:true, tension:.35}]},
+    options:{plugins:{legend:{display:false}}}
+  });
+}
+
+/* ============== SETTINGS ============== */
+function loadSettingsForm(){
+  document.getElementById('setVillaName').value = DB.settings.villaName;
+  document.getElementById('setWhatsapp').value = DB.settings.whatsapp;
+  document.getElementById('setCurrency').value = DB.settings.currency;
+  document.getElementById('setDefaultAdmin').value = DB.settings.defaultAdmin;
+  document.getElementById('setTheme').value = DB.settings.theme;
+}
+document.getElementById('saveSettingsBtn').addEventListener('click', ()=>{
+  DB.settings.villaName = document.getElementById('setVillaName').value || 'Villa Mont Oreb Alain';
+  DB.settings.whatsapp = document.getElementById('setWhatsapp').value.replace(/\D/g,'');
+  DB.settings.currency = document.getElementById('setCurrency').value || '$';
+  DB.settings.defaultAdmin = document.getElementById('setDefaultAdmin').value;
+  DB.settings.theme = document.getElementById('setTheme').value;
+  saveData(); applyTheme(); applyWA();
+  document.querySelector('.brand .name').textContent = DB.settings.villaName;
+  toast('Settings saved.');
+});
+
+/* ============== REFRESH ALL ============== */
+function refreshAll(){
+  renderDashboard(); renderCalendar(); renderBookingsTable();
+  if(document.getElementById('page-analytics').classList.contains('active')) renderAnalytics();
+  renderFullFeed();
+}
+
+/* ============== INIT ============== */
+function init(){
+  document.getElementById('yearFoot').textContent = new Date().getFullYear();
+  document.querySelector('.brand .name').textContent = DB.settings.villaName;
+  document.getElementById('currentAdmin').value = DB.settings.defaultAdmin;
+  applyTheme(); applyWA(); populateBulkAdminSelect();
+  renderDashboard(); renderCalendar(); renderBookingsTable(); renderFullFeed();
+}
+init();
 </script>
-
-  
 </body>
 </html>
