@@ -2,417 +2,225 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Mauritius AI Rental Estimator</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Property Valuation Estimator | Real Estate Intelligence</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-
-:root{
-    --primary:#0f172a;
-    --secondary:#1e293b;
-    --gold:#d4af37;
-    --success:#16a34a;
-    --warning:#f59e0b;
-    --danger:#dc2626;
-    --light:#f8fafc;
-}
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
 body{
-    font-family:'Poppins',sans-serif;
-    background:linear-gradient(135deg,#0f172a,#1e293b);
-    min-height:100vh;
-    color:white;
+font-family: Arial, sans-serif;
+margin:0;
+background:#0f172a;
+color:white;
 }
 
 .container{
-    max-width:1200px;
-    margin:auto;
-    padding:40px 20px;
-}
-
-.hero{
-    text-align:center;
-    margin-bottom:40px;
-}
-
-.hero h1{
-    font-size:3rem;
-    margin-bottom:10px;
-}
-
-.hero p{
-    color:#cbd5e1;
-    max-width:800px;
-    margin:auto;
+max-width:900px;
+margin:auto;
+padding:20px;
 }
 
 .card{
-    background:rgba(255,255,255,0.06);
-    backdrop-filter:blur(20px);
-    border:1px solid rgba(255,255,255,0.1);
-    border-radius:24px;
-    padding:30px;
-    box-shadow:0 25px 50px rgba(0,0,0,.3);
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
 }
 
-.grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:30px;
-}
-
-.input-group{
-    margin-bottom:25px;
+h1{
+text-align:center;
+color:#fbbf24;
 }
 
 label{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:10px;
-    font-weight:500;
+display:block;
+margin-top:15px;
+font-weight:bold;
 }
 
-.range-value{
-    color:var(--gold);
-    font-weight:600;
+select,input{
+width:100%;
+padding:10px;
+margin-top:5px;
+border-radius:8px;
+border:none;
 }
 
-input[type=range]{
-    width:100%;
-    height:10px;
-    border-radius:20px;
+.result{
+margin-top:20px;
+padding:15px;
+background:#0b1220;
+border-radius:10px;
+text-align:center;
 }
 
-select{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:12px;
-    font-size:16px;
-    background:white;
+.big{
+font-size:28px;
+color:#22c55e;
+font-weight:bold;
 }
 
-.results{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
+.small{
+color:#94a3b8;
 }
 
-.gauge-container{
-    width:260px;
-    height:260px;
-    position:relative;
+button{
+width:100%;
+padding:15px;
+margin-top:20px;
+background:#25D366;
+border:none;
+color:white;
+font-size:16px;
+border-radius:10px;
+cursor:pointer;
 }
 
-.gauge{
-    width:100%;
-    height:100%;
-    border-radius:50%;
-    background:conic-gradient(
-    var(--gold) 0deg,
-    var(--gold) 220deg,
-    rgba(255,255,255,0.1) 220deg
-    );
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition:1s ease;
+button:hover{
+background:#1ea952;
 }
-
-.gauge-inner{
-    width:190px;
-    height:190px;
-    background:var(--primary);
-    border-radius:50%;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-}
-
-.price{
-    font-size:2rem;
-    font-weight:700;
-}
-
-.price-label{
-    color:#cbd5e1;
-}
-
-.confidence{
-    margin-top:25px;
-    padding:10px 25px;
-    border-radius:30px;
-    font-weight:600;
-}
-
-.high{
-    background:rgba(22,163,74,.2);
-    color:#22c55e;
-}
-
-.medium{
-    background:rgba(245,158,11,.2);
-    color:#fbbf24;
-}
-
-.low{
-    background:rgba(220,38,38,.2);
-    color:#ef4444;
-}
-
-.ai-box{
-    margin-top:25px;
-    text-align:center;
-}
-
-.ai-title{
-    color:var(--gold);
-    font-weight:600;
-    margin-bottom:10px;
-}
-
-.ai-text{
-    color:#cbd5e1;
-    line-height:1.7;
-}
-
-.whatsapp{
-    margin-top:35px;
-    display:inline-block;
-    background:#25D366;
-    color:white;
-    text-decoration:none;
-    padding:16px 32px;
-    border-radius:50px;
-    font-weight:600;
-    transition:.3s;
-}
-
-.whatsapp:hover{
-    transform:translateY(-3px);
-}
-
-.footer{
-    margin-top:40px;
-    text-align:center;
-    color:#94a3b8;
-}
-
-@media(max-width:900px){
-
-.grid{
-    grid-template-columns:1fr;
-}
-
-.hero h1{
-    font-size:2rem;
-}
-
-}
-
 </style>
 </head>
+
 <body>
 
 <div class="container">
-
-<div class="hero">
-<h1>🏠 AI Property Valuation Estimator</h1>
-<p>
-Get an instant AI-powered estimate of your property's market value.
-Adjust property details below and watch the valuation update in real time.
-</p>
-</div>
-
 <div class="card">
 
-<div class="grid">
+<h1>🏠 Mauritius AI Rental Estimator</h1>
 
-<div>
-
-<div class="input-group">
-<label>
-<span>Square Footage</span>
-<span id="sqftValue" class="range-value">1800 sqft</span>
-</label>
-<input type="range" id="sqft" min="500" max="8000" value="1800">
-</div>
-
-<div class="input-group">
-<label>
-<span>Bedrooms</span>
-<span id="bedValue" class="range-value">3</span>
-</label>
-<input type="range" id="bedrooms" min="1" max="10" value="3">
-</div>
-
-<div class="input-group">
-<label>
-<span>Bathrooms</span>
-<span id="bathValue" class="range-value">2</span>
-</label>
-<input type="range" id="bathrooms" min="1" max="8" value="2">
-</div>
-
-<div class="input-group">
-<label>Neighborhood</label>
-<select id="area">
-<option value="1">Standard Area</option>
-<option value="1.25">Prime Residential</option>
-<option value="1.5">Luxury District</option>
-<option value="1.8">Beachfront Premium</option>
-<option value="2">Ultra Luxury Zone</option>
+<label>Town / Area</label>
+<select id="town">
+<option>Port Louis</option>
+<option>Curepipe</option>
+<option>Vacoas</option>
+<option>Quatre Bornes</option>
+<option>Rose Hill</option>
+<option>Ebene</option>
+<option>Grand Baie</option>
+<option>Flic en Flac</option>
+<option>Tamarin</option>
+<option>Triolet</option>
+<option>Flacq</option>
+<option>Mahebourg</option>
 </select>
+
+<label>Property Type</label>
+<select id="type">
+<option value="studio">Studio</option>
+<option value="2br">2 Bedroom</option>
+<option value="3br">3 Bedroom</option>
+<option value="villa">Villa</option>
+</select>
+
+<label>Furnished</label>
+<select id="furnished">
+<option value="no">Unfurnished</option>
+<option value="yes">Furnished</option>
+</select>
+
+<label>Extras</label>
+<select id="extras">
+<option value="0">None</option>
+<option value="2000">Parking</option>
+<option value="4000">Parking + AC</option>
+<option value="8000">Sea View / Premium</option>
+</select>
+
+<div class="result">
+<div class="small">Estimated Monthly Rent</div>
+<div class="big" id="price">Rs 0</div>
+<div id="confidence" class="small"></div>
 </div>
 
-</div>
-
-<div class="results">
-
-<div class="gauge-container">
-<div class="gauge" id="gauge">
-<div class="gauge-inner">
-<div class="price-label">Estimated Value</div>
-<div class="price" id="price">$250,000</div>
-</div>
-</div>
-</div>
-
-<div id="confidence" class="confidence medium">
-Confidence: Medium
-</div>
-
-<div class="ai-box">
-<div class="ai-title">AI Market Insight</div>
-<div id="insight" class="ai-text">
-This property falls within a healthy demand range and may attract strong buyer interest.
-</div>
-</div>
-
-<a
-class="whatsapp"
-target="_blank"
-href="https://wa.me/23059237053?text=Hello%20Wassim,%20I%20used%20the%20AI%20Property%20Valuation%20Estimator%20and%20would%20like%20a%20professional%20property%20valuation."
->
-📲 Request Professional Valuation
-</a>
+<button onclick="whatsapp()">
+📲 Get Professional Valuation on WhatsApp
+</button>
 
 </div>
-
-</div>
-
-</div>
-
-<div class="footer">
-Powered by AI Real Estate Intelligence • Instant Estimates • Professional Guidance
-</div>
-
 </div>
 
 <script>
 
-const sqft = document.getElementById('sqft');
-const bedrooms = document.getElementById('bedrooms');
-const bathrooms = document.getElementById('bathrooms');
-const area = document.getElementById('area');
+// BASE MARKET DATA (FROM YOUR INPUT)
+const data = {
+"Port Louis": {
+studio:10000,
+"2br":14000,
+"3br":15000,
+"3br_f":20000
+},
+"Curepipe":{
+"2br":15000
+},
+"Grand Baie":{
+"2br":22000,
+"2br_lux":28000,
+villa:65000
+},
+"Vacoas":{
+studio:8000,
+"2br":15000,
+"3br":18000
+},
+"Quatre Bornes":{
+"2br":16000,
+"3br":19000
+},
+"Flic en Flac":{
+"2br":20000,
+villa:55000
+}
+};
 
-function updateEstimator(){
+function calculate(){
 
-let s = parseInt(sqft.value);
-let b = parseInt(bedrooms.value);
-let ba = parseInt(bathrooms.value);
-let n = parseFloat(area.value);
+let town = document.getElementById("town").value;
+let type = document.getElementById("type").value;
+let furnished = document.getElementById("furnished").value;
+let extras = parseInt(document.getElementById("extras").value);
 
-document.getElementById('sqftValue').innerText = s + ' sqft';
-document.getElementById('bedValue').innerText = b;
-document.getElementById('bathValue').innerText = ba;
+let base = 12000;
 
-let valuation =
-(
-(s * 180)
-+
-(b * 25000)
-+
-(ba * 15000)
-)
-*
-n;
-
-valuation = Math.round(valuation);
-
-document.getElementById('price').innerText =
-'$' + valuation.toLocaleString();
-
-let confidenceText = "Medium";
-let confidenceClass = "medium";
-
-if(s > 2500 && b >= 4){
-confidenceText = "High";
-confidenceClass = "high";
+// try find specific match
+if(data[town] && data[town][type]){
+base = data[town][type];
 }
 
-if(s < 900){
-confidenceText = "Low";
-confidenceClass = "low";
+// adjustments
+if(furnished === "yes"){
+base += 3000;
 }
 
-const confidence = document.getElementById('confidence');
+base += extras;
 
-confidence.className =
-'confidence ' + confidenceClass;
+// confidence logic
+let confidence = "Medium";
 
-confidence.innerHTML =
-'Confidence: ' + confidenceText;
+if(base > 30000){
+confidence = "High (Luxury Market)";
+}
+if(base < 12000){
+confidence = "Low (Budget Segment)";
+}
 
-let percent =
-Math.min(valuation / 2500000,1);
+document.getElementById("price").innerText =
+"Rs " + base.toLocaleString();
 
-let degrees =
-220 * percent;
-
-document.getElementById('gauge').style.background =
-`conic-gradient(
-#d4af37 0deg,
-#d4af37 ${degrees}deg,
-rgba(255,255,255,.1) ${degrees}deg
-)`;
-
-let insight =
-"Strong residential demand with stable pricing trends.";
-
-if(n >= 1.8)
-insight =
-"Premium location detected. Luxury properties in this zone typically command higher buyer demand and stronger appreciation potential.";
-
-if(s > 3500)
-insight =
-"Large property footprint detected. High-value buyers may be targeted for maximum return.";
-
-if(confidenceText === "Low")
-insight =
-"Additional market data may be required for greater valuation accuracy.";
-
-document.getElementById('insight').innerText =
-insight;
+document.getElementById("confidence").innerText =
+"AI Confidence: " + confidence;
 
 }
 
-sqft.addEventListener('input',updateEstimator);
-bedrooms.addEventListener('input',updateEstimator);
-bathrooms.addEventListener('input',updateEstimator);
-area.addEventListener('change',updateEstimator);
+function whatsapp(){
+let msg = encodeURIComponent("Hello, I want a full rental valuation for my property.");
+window.open("https://wa.me/23059237053?text=" + msg, "_blank");
+}
 
-updateEstimator();
+document.querySelectorAll("select").forEach(e=>{
+e.addEventListener("change",calculate);
+});
+
+calculate();
 
 </script>
 
