@@ -3,994 +3,418 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Villa Mont Oreb Alain — Reservation Management</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<title>AI Property Valuation Estimator | Real Estate Intelligence</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
+
 :root{
-  --bg:#0f1115; --bg2:#161922; --card:rgba(255,255,255,0.04); --card-solid:#1b1f2a;
-  --border:rgba(255,255,255,0.08); --text:#eef0f5; --muted:#9aa3b5;
-  --accent:#c9a24b; --accent2:#e6c879;
-  --green:#3ec77a; --red:#ef5b6f; --gray:#8a8f9c; --blue:#4fa3e0; --orange:#f0a649;
-  --radius:16px; --shadow:0 10px 30px rgba(0,0,0,0.35);
+    --primary:#0f172a;
+    --secondary:#1e293b;
+    --gold:#d4af37;
+    --success:#16a34a;
+    --warning:#f59e0b;
+    --danger:#dc2626;
+    --light:#f8fafc;
 }
-[data-theme="light"]{
-  --bg:#f4f3ef; --bg2:#ffffff; --card:rgba(255,255,255,0.7); --card-solid:#ffffff;
-  --border:rgba(0,0,0,0.08); --text:#1c1e26; --muted:#5d6270;
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
-*{box-sizing:border-box;}
-body{margin:0;font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;background:
-  radial-gradient(circle at 10% 0%, rgba(201,162,75,0.12), transparent 40%),
-  radial-gradient(circle at 90% 20%, rgba(79,163,224,0.10), transparent 40%),
-  var(--bg);color:var(--text);min-height:100vh;}
-a{color:inherit;text-decoration:none;}
-.app{display:flex;min-height:100vh;}
 
-/* Sidebar */
-.sidebar{width:230px;background:var(--bg2);border-right:1px solid var(--border);padding:24px 16px;position:fixed;top:0;left:0;height:100vh;display:flex;flex-direction:column;gap:6px;z-index:50;transition:transform .25s;}
-.brand{display:flex;align-items:center;gap:10px;margin-bottom:24px;padding:0 8px;}
-.brand .logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#1a1a1a;}
-.brand .name{font-weight:700;font-size:14px;line-height:1.2;}
-.brand .sub{font-size:11px;color:var(--muted);}
-.nav-item{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;color:var(--muted);cursor:pointer;font-size:14px;font-weight:500;}
-.nav-item:hover{background:var(--card);color:var(--text);}
-.nav-item.active{background:linear-gradient(135deg,rgba(201,162,75,0.18),rgba(201,162,75,0.05));color:var(--accent);border:1px solid rgba(201,162,75,0.25);}
-.nav-icon{width:18px;text-align:center;}
-.sidebar-footer{margin-top:auto;font-size:11px;color:var(--muted);padding:8px;}
+body{
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+    min-height:100vh;
+    color:white;
+}
 
-/* Main */
-.main{margin-left:230px;flex:1;padding:24px 28px 80px;max-width:1400px;}
-.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;gap:12px;flex-wrap:wrap;}
-.topbar h1{font-size:22px;margin:0;}
-.topbar .right{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
-.admin-select{background:var(--card-solid);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:10px;font-size:13px;}
-.btn{background:var(--card-solid);border:1px solid var(--border);color:var(--text);padding:9px 14px;border-radius:10px;font-size:13px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px;}
-.btn:hover{border-color:var(--accent);}
-.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#1a1a1a;border:none;}
-.btn-primary:hover{filter:brightness(1.05);}
-.btn-danger{color:var(--red);}
-.btn-sm{padding:6px 10px;font-size:12px;border-radius:8px;}
-.icon-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;}
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:40px 20px;
+}
 
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;backdrop-filter:blur(14px);box-shadow:var(--shadow);}
-.grid-cards{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:22px;}
-.stat-card{padding:16px;}
-.stat-card .val{font-size:24px;font-weight:700;}
-.stat-card .lbl{font-size:12px;color:var(--muted);margin-top:4px;}
-.stat-card .ico{font-size:18px;margin-bottom:6px;}
+.hero{
+    text-align:center;
+    margin-bottom:40px;
+}
 
-.section-title{font-size:15px;font-weight:700;margin:0 0 14px;display:flex;align-items:center;gap:8px;}
+.hero h1{
+    font-size:3rem;
+    margin-bottom:10px;
+}
 
-/* Calendar */
-.cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
-.cal-month{font-size:18px;font-weight:700;}
-.cal-nav{display:flex;gap:8px;}
-.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:14px;}
-.legend span{display:inline-flex;align-items:center;gap:6px;}
-.dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
-.cal-dow{text-align:center;font-size:11px;color:var(--muted);font-weight:700;padding:4px 0;}
-.cal-day{min-height:78px;border-radius:10px;border:1px solid var(--border);padding:6px;font-size:12px;cursor:pointer;position:relative;background:rgba(255,255,255,0.02);transition:.15s;}
-.cal-day:hover{border-color:var(--accent);transform:translateY(-2px);}
-.cal-day.other{opacity:0.3;}
-.cal-day.today{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset;}
-.cal-day .dnum{font-weight:700;}
-.cal-day .events{margin-top:4px;display:flex;flex-direction:column;gap:2px;}
-.cal-day .evt{font-size:10px;padding:2px 5px;border-radius:5px;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.evt.reserved{background:var(--red);} .evt.blocked{background:var(--gray);} .evt.owner{background:var(--blue);} .evt.maintenance{background:var(--orange);} .evt.note{background:#6c5dd3;}
+.hero p{
+    color:#cbd5e1;
+    max-width:800px;
+    margin:auto;
+}
 
-/* layout two-col */
-.two-col{display:grid;grid-template-columns:2.2fr 1fr;gap:18px;align-items:start;}
+.card{
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:24px;
+    padding:30px;
+    box-shadow:0 25px 50px rgba(0,0,0,.3);
+}
 
-/* table */
-table{width:100%;border-collapse:collapse;font-size:13px;}
-th{text-align:left;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em;padding:8px 10px;border-bottom:1px solid var(--border);}
-td{padding:10px;border-bottom:1px solid var(--border);}
-tr:hover td{background:rgba(255,255,255,0.03);}
-.badge{padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;color:#fff;display:inline-block;}
-.badge.reserved{background:var(--red);} .badge.blocked{background:var(--gray);} .badge.owner{background:var(--blue);} .badge.maintenance{background:var(--orange);}
-.search-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
-input[type=text],input[type=search],input[type=number],input[type=date],input[type=email],input[type=tel],select,textarea{
-  background:var(--card-solid);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:10px;font-size:13px;width:100%;font-family:inherit;}
-.filters{display:flex;gap:8px;flex-wrap:wrap;}
-.chip{padding:7px 13px;border-radius:20px;border:1px solid var(--border);font-size:12px;cursor:pointer;color:var(--muted);}
-.chip.active{background:var(--accent);color:#1a1a1a;border-color:var(--accent);font-weight:700;}
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:30px;
+}
 
-/* feed */
-.feed-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12.5px;}
-.feed-item:last-child{border-bottom:none;}
-.feed-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0;background:var(--accent);}
-.feed-time{color:var(--muted);font-size:11px;}
+.input-group{
+    margin-bottom:25px;
+}
 
-/* modal */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:200;padding:20px;}
-.overlay.show{display:flex;}
-.modal{background:var(--card-solid);border:1px solid var(--border);border-radius:18px;width:100%;max-width:520px;max-height:88vh;overflow-y:auto;padding:22px;box-shadow:var(--shadow);}
-.modal h3{margin:0 0 4px;font-size:17px;}
-.modal .sub{color:var(--muted);font-size:12px;margin-bottom:16px;}
-.modal-close{position:absolute;top:18px;right:20px;cursor:pointer;color:var(--muted);font-size:18px;background:none;border:none;}
-.form-row{margin-bottom:12px;}
-.form-row label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:600;}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;}
-.action-tile{border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;cursor:pointer;background:rgba(255,255,255,0.02);}
-.action-tile:hover{border-color:var(--accent);}
-.action-tile .ic{font-size:20px;margin-bottom:6px;}
-.action-tile .tt{font-size:12px;font-weight:700;}
-.modal-foot{display:flex;justify-content:flex-end;gap:8px;margin-top:16px;}
-.existing-evt{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);border-radius:10px;padding:10px;margin-bottom:8px;font-size:12.5px;}
+label{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+    font-weight:500;
+}
 
-/* whatsapp float */
-.wa-float{position:fixed;bottom:24px;right:24px;background:#25D366;color:#fff;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 8px 24px rgba(37,211,102,0.5);z-index:300;cursor:pointer;}
+.range-value{
+    color:var(--gold);
+    font-weight:600;
+}
 
-.page{display:none;}
-.page.active{display:block;}
+input[type=range]{
+    width:100%;
+    height:10px;
+    border-radius:20px;
+}
 
-.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-.chart-box{height:280px;}
+select{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    font-size:16px;
+    background:white;
+}
 
-.toast-wrap{position:fixed;top:18px;right:18px;z-index:400;display:flex;flex-direction:column;gap:8px;}
-.toast{background:var(--card-solid);border:1px solid var(--border);border-left:4px solid var(--accent);padding:12px 16px;border-radius:10px;font-size:13px;box-shadow:var(--shadow);min-width:240px;animation:slidein .25s;}
-@keyframes slidein{from{transform:translateX(30px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+.results{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
 
-.settings-form{max-width:480px;display:flex;flex-direction:column;gap:14px;}
-.hamburger{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;}
+.gauge-container{
+    width:260px;
+    height:260px;
+    position:relative;
+}
+
+.gauge{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    background:conic-gradient(
+    var(--gold) 0deg,
+    var(--gold) 220deg,
+    rgba(255,255,255,0.1) 220deg
+    );
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:1s ease;
+}
+
+.gauge-inner{
+    width:190px;
+    height:190px;
+    background:var(--primary);
+    border-radius:50%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+.price{
+    font-size:2rem;
+    font-weight:700;
+}
+
+.price-label{
+    color:#cbd5e1;
+}
+
+.confidence{
+    margin-top:25px;
+    padding:10px 25px;
+    border-radius:30px;
+    font-weight:600;
+}
+
+.high{
+    background:rgba(22,163,74,.2);
+    color:#22c55e;
+}
+
+.medium{
+    background:rgba(245,158,11,.2);
+    color:#fbbf24;
+}
+
+.low{
+    background:rgba(220,38,38,.2);
+    color:#ef4444;
+}
+
+.ai-box{
+    margin-top:25px;
+    text-align:center;
+}
+
+.ai-title{
+    color:var(--gold);
+    font-weight:600;
+    margin-bottom:10px;
+}
+
+.ai-text{
+    color:#cbd5e1;
+    line-height:1.7;
+}
+
+.whatsapp{
+    margin-top:35px;
+    display:inline-block;
+    background:#25D366;
+    color:white;
+    text-decoration:none;
+    padding:16px 32px;
+    border-radius:50px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.whatsapp:hover{
+    transform:translateY(-3px);
+}
+
+.footer{
+    margin-top:40px;
+    text-align:center;
+    color:#94a3b8;
+}
 
 @media(max-width:900px){
-  .sidebar{transform:translateX(-100%);}
-  .sidebar.open{transform:translateX(0);}
-  .main{margin-left:0;padding:18px;}
-  .grid-cards{grid-template-columns:repeat(2,1fr);}
-  .two-col{grid-template-columns:1fr;}
-  .charts-grid{grid-template-columns:1fr;}
-  .form-grid{grid-template-columns:1fr;}
-  .hamburger{display:inline-block;}
-  .cal-day{min-height:60px;font-size:10px;}
+
+.grid{
+    grid-template-columns:1fr;
 }
+
+.hero h1{
+    font-size:2rem;
+}
+
+}
+
 </style>
 </head>
-<body data-theme="dark">
-<div class="toast-wrap" id="toastWrap"></div>
+<body>
 
-<div class="overlay" id="overlay"></div>
+<div class="container">
 
-<div class="app">
-  <div class="sidebar" id="sidebar">
-    <div class="brand">
-      <div class="logo">VM</div>
-      <div>
-        <div class="name">Villa Mont Oreb Alain</div>
-        <div class="sub">Reservation Suite</div>
-      </div>
-    </div>
-    <div class="nav-item active" data-page="dashboard"><span class="nav-icon">🏠</span> Dashboard</div>
-    <div class="nav-item" data-page="calendar"><span class="nav-icon">📅</span> Calendar</div>
-    <div class="nav-item" data-page="bookings"><span class="nav-icon">📋</span> Bookings</div>
-    <div class="nav-item" data-page="analytics"><span class="nav-icon">📊</span> Analytics</div>
-    <div class="nav-item" data-page="activity"><span class="nav-icon">🔔</span> Activity Log</div>
-    <div class="nav-item" data-page="settings"><span class="nav-icon">⚙️</span> Settings</div>
-    <div class="sidebar-footer">© <span id="yearFoot"></span> Villa Mont Oreb Alain<br>Offline-ready · LocalStorage</div>
-  </div>
-
-  <div class="main">
-    <div class="topbar">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <button class="hamburger" id="hamburger">☰</button>
-        <h1 id="pageTitle">Dashboard</h1>
-      </div>
-      <div class="right">
-        <select class="admin-select" id="currentAdmin">
-          <option>Alain</option>
-          <option>Kessaven</option>
-          <option>Hitech</option>
-          <option>Superdeals</option>
-        </select>
-        <button class="btn" id="toggleTheme">🌙 Dark</button>
-        <button class="btn btn-primary" id="newBookingBtn">+ New Booking</button>
-      </div>
-    </div>
-
-    <!-- DASHBOARD -->
-    <div class="page active" id="page-dashboard">
-      <div class="grid-cards" id="statCards"></div>
-      <div class="two-col">
-        <div class="card">
-          <div class="section-title">📅 This Month at a Glance</div>
-          <div id="miniCalWrap"></div>
-        </div>
-        <div class="card">
-          <div class="section-title">🔔 Recent Activity</div>
-          <div id="dashFeed"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CALENDAR -->
-    <div class="page" id="page-calendar">
-      <div class="card" style="margin-bottom:18px;">
-        <div class="section-title">🚫 Block Dates (Easy Mode)</div>
-        <div class="sub" style="color:var(--muted);font-size:12.5px;margin-bottom:14px;">
-          Pick a "From" date and a "To" date below, then click <b>+ Add Another Line</b> for each new booking you need to block. When you're done, click <b>Block All Dates</b> once.
-        </div>
-        <div id="bulkRows"></div>
-        <button class="btn" id="addBulkRowBtn" style="margin-top:6px;">+ Add Another Line</button>
-        <div class="form-grid" style="margin-top:14px;">
-          <div class="form-row"><label>Reason (applies to all)</label><input type="text" id="bulkBlockReason" placeholder="e.g. Owner block"></div>
-          <div class="form-row"><label>Your Name</label><select id="bulkBlockAdmin"></select></div>
-        </div>
-        <button class="btn btn-primary" id="bulkBlockBtn" style="margin-top:6px;">Block All Dates</button>
-        <div id="bulkBlockResult" style="margin-top:10px;font-size:12.5px;"></div>
-      </div>
-      <div class="card">
-        <div class="cal-header">
-          <div class="cal-nav">
-            <button class="btn btn-sm" id="prevMonth">‹ Prev</button>
-            <button class="btn btn-sm" id="todayBtn">Today</button>
-            <button class="btn btn-sm" id="nextMonth">Next ›</button>
-          </div>
-          <div class="cal-month" id="calMonthLabel"></div>
-          <div class="cal-nav">
-            <button class="btn btn-sm" id="printCalBtn">🖨️ Print</button>
-            <button class="btn btn-sm" id="pdfCalBtn">⬇️ PDF</button>
-          </div>
-        </div>
-        <div class="legend">
-          <span><i class="dot" style="background:var(--green)"></i>Available</span>
-          <span><i class="dot" style="background:var(--red)"></i>Reserved</span>
-          <span><i class="dot" style="background:var(--gray)"></i>Blocked</span>
-          <span><i class="dot" style="background:var(--blue)"></i>Owner Stay</span>
-          <span><i class="dot" style="background:var(--orange)"></i>Maintenance</span>
-        </div>
-        <div class="cal-grid" id="calDow"></div>
-        <div class="cal-grid" id="calGrid" style="margin-top:6px;"></div>
-      </div>
-    </div>
-
-    <!-- BOOKINGS -->
-    <div class="page" id="page-bookings">
-      <div class="card">
-        <div class="section-title">📋 All Bookings & Events</div>
-        <div class="search-row">
-          <input type="search" id="searchInput" placeholder="Search guest, date, source, admin..." style="max-width:320px;">
-          <div class="filters" id="filterChips">
-            <div class="chip active" data-f="all">All</div>
-            <div class="chip" data-f="reserved">Reserved</div>
-            <div class="chip" data-f="blocked">Blocked</div>
-            <div class="chip" data-f="owner">Owner Stay</div>
-            <div class="chip" data-f="maintenance">Maintenance</div>
-          </div>
-          <button class="btn" id="exportJsonBtn">⬇️ Export JSON</button>
-          <button class="btn" id="importJsonBtn">⬆️ Import JSON</button>
-          <input type="file" id="importFileInput" accept=".json" style="display:none;">
-          <button class="btn" id="backupBtn">💾 Backup</button>
-          <button class="btn" id="restoreBtn">♻️ Restore</button>
-          <input type="file" id="restoreFileInput" accept=".json" style="display:none;">
-        </div>
-        <div style="overflow-x:auto;">
-        <table id="bookingsTable">
-          <thead><tr>
-            <th>Guest</th><th>Check-In</th><th>Check-Out</th><th>Guests</th><th>Amount</th><th>Source</th><th>Managed By</th><th>Status</th><th>Actions</th>
-          </tr></thead>
-          <tbody id="bookingsBody"></tbody>
-        </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ANALYTICS -->
-    <div class="page" id="page-analytics">
-      <div class="charts-grid">
-        <div class="card"><div class="section-title">📈 Monthly Occupancy</div><div class="chart-box"><canvas id="chartOccupancy"></canvas></div></div>
-        <div class="card"><div class="section-title">🧭 Booking Sources</div><div class="chart-box"><canvas id="chartSources"></canvas></div></div>
-        <div class="card"><div class="section-title">💰 Revenue Tracking</div><div class="chart-box"><canvas id="chartRevenue"></canvas></div></div>
-        <div class="card"><div class="section-title">📉 Reservation Trends</div><div class="chart-box"><canvas id="chartTrends"></canvas></div></div>
-      </div>
-    </div>
-
-    <!-- ACTIVITY -->
-    <div class="page" id="page-activity">
-      <div class="card">
-        <div class="section-title">🔔 Notification Center & Audit Log</div>
-        <button class="btn btn-danger btn-sm" id="clearLogBtn" style="margin-bottom:12px;">Clear Log (Manual Only)</button>
-        <div id="fullFeed"></div>
-      </div>
-    </div>
-
-    <!-- SETTINGS -->
-    <div class="page" id="page-settings">
-      <div class="card">
-        <div class="section-title">⚙️ Settings</div>
-        <div class="settings-form">
-          <div class="form-row"><label>Villa Name</label><input type="text" id="setVillaName"></div>
-          <div class="form-row"><label>WhatsApp Number (with country code, no +)</label><input type="text" id="setWhatsapp"></div>
-          <div class="form-row"><label>Currency Symbol</label><input type="text" id="setCurrency"></div>
-          <div class="form-row"><label>Default Admin</label>
-            <select id="setDefaultAdmin"><option>Alain</option><option>Kessaven</option><option>Hitech</option><option>Superdeals</option></select>
-          </div>
-          <div class="form-row"><label>Theme</label>
-            <select id="setTheme"><option value="dark">Dark</option><option value="light">Light</option></select>
-          </div>
-          <button class="btn btn-primary" id="saveSettingsBtn">Save Settings</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
+<div class="hero">
+<h1>🏠 AI Property Valuation Estimator</h1>
+<p>
+Get an instant AI-powered estimate of your property's market value.
+Adjust property details below and watch the valuation update in real time.
+</p>
 </div>
 
-<div class="wa-float" id="waFloat" title="Chat on WhatsApp">💬</div>
+<div class="card">
+
+<div class="grid">
+
+<div>
+
+<div class="input-group">
+<label>
+<span>Square Footage</span>
+<span id="sqftValue" class="range-value">1800 sqft</span>
+</label>
+<input type="range" id="sqft" min="500" max="8000" value="1800">
+</div>
+
+<div class="input-group">
+<label>
+<span>Bedrooms</span>
+<span id="bedValue" class="range-value">3</span>
+</label>
+<input type="range" id="bedrooms" min="1" max="10" value="3">
+</div>
+
+<div class="input-group">
+<label>
+<span>Bathrooms</span>
+<span id="bathValue" class="range-value">2</span>
+</label>
+<input type="range" id="bathrooms" min="1" max="8" value="2">
+</div>
+
+<div class="input-group">
+<label>Neighborhood</label>
+<select id="area">
+<option value="1">Standard Area</option>
+<option value="1.25">Prime Residential</option>
+<option value="1.5">Luxury District</option>
+<option value="1.8">Beachfront Premium</option>
+<option value="2">Ultra Luxury Zone</option>
+</select>
+</div>
+
+</div>
+
+<div class="results">
+
+<div class="gauge-container">
+<div class="gauge" id="gauge">
+<div class="gauge-inner">
+<div class="price-label">Estimated Value</div>
+<div class="price" id="price">$250,000</div>
+</div>
+</div>
+</div>
+
+<div id="confidence" class="confidence medium">
+Confidence: Medium
+</div>
+
+<div class="ai-box">
+<div class="ai-title">AI Market Insight</div>
+<div id="insight" class="ai-text">
+This property falls within a healthy demand range and may attract strong buyer interest.
+</div>
+</div>
+
+<a
+class="whatsapp"
+target="_blank"
+href="https://wa.me/23059237053?text=Hello%20Wassim,%20I%20used%20the%20AI%20Property%20Valuation%20Estimator%20and%20would%20like%20a%20professional%20property%20valuation."
+>
+📲 Request Professional Valuation
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+Powered by AI Real Estate Intelligence • Instant Estimates • Professional Guidance
+</div>
+
+</div>
 
 <script>
-/* ============== STATE & STORAGE ============== */
-const ADMINS = ["Alain","Kessaven","Hitech","Superdeals"];
-const SOURCES = ["Airbnb","Booking.com","Direct Booking","WhatsApp","Facebook","Instagram","Other"];
-const STORAGE_KEY = "vmoa_data_v1";
 
-let DB = loadData() || {
-  events: [],   // {id,type:'booking'|'blocked'|'owner'|'maintenance'|'note', start,end, guest,phone,email,guests,source,amount,notes,managedBy, reason, createdAt}
-  log: [],
-  settings: { villaName:"Villa Mont Oreb Alain", whatsapp:"23059237053", currency:"$", defaultAdmin:"Alain", theme:"dark" }
-};
+const sqft = document.getElementById('sqft');
+const bedrooms = document.getElementById('bedrooms');
+const bathrooms = document.getElementById('bathrooms');
+const area = document.getElementById('area');
 
-function saveData(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(DB)); }
-function loadData(){ try{ const r = localStorage.getItem(STORAGE_KEY); return r? JSON.parse(r): null; }catch(e){ return null; } }
+function updateEstimator(){
 
-function uid(){ return 'e'+Date.now()+Math.random().toString(36).slice(2,7); }
-function fmtDate(d){ const dt = (d instanceof Date)? d : new Date(d); return dt.toISOString().slice(0,10); }
-function pretty(d){ const dt=new Date(d+'T00:00:00'); return dt.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}); }
+let s = parseInt(sqft.value);
+let b = parseInt(bedrooms.value);
+let ba = parseInt(bathrooms.value);
+let n = parseFloat(area.value);
 
-function addLog(text){
-  DB.log.unshift({id:uid(), text, time:new Date().toISOString()});
-  saveData();
+document.getElementById('sqftValue').innerText = s + ' sqft';
+document.getElementById('bedValue').innerText = b;
+document.getElementById('bathValue').innerText = ba;
+
+let valuation =
+(
+(s * 180)
++
+(b * 25000)
++
+(ba * 15000)
+)
+*
+n;
+
+valuation = Math.round(valuation);
+
+document.getElementById('price').innerText =
+'$' + valuation.toLocaleString();
+
+let confidenceText = "Medium";
+let confidenceClass = "medium";
+
+if(s > 2500 && b >= 4){
+confidenceText = "High";
+confidenceClass = "high";
 }
 
-function toast(msg){
-  const wrap = document.getElementById('toastWrap');
-  const t = document.createElement('div');
-  t.className='toast'; t.textContent = msg;
-  wrap.appendChild(t);
-  setTimeout(()=>t.remove(), 3500);
+if(s < 900){
+confidenceText = "Low";
+confidenceClass = "low";
 }
 
-/* ============== DATE RANGE HELPERS ============== */
-function eachDate(start,end){
-  const arr=[]; let d = new Date(start+'T00:00:00'); const e = new Date(end+'T00:00:00');
-  while(d<=e){ arr.push(fmtDate(d)); d.setDate(d.getDate()+1); }
-  return arr;
-}
-function rangesOverlap(s1,e1,s2,e2){
-  return !(e1 < s2 || s1 > e2);
-}
-function blockingEventsOnRange(start,end,excludeId){
-  return DB.events.filter(ev=> ev.id!==excludeId && rangesOverlap(start,end,ev.start,ev.end) && ev.type!=='note');
-}
+const confidence = document.getElementById('confidence');
 
-/* ============== NAV ============== */
-document.querySelectorAll('.nav-item').forEach(item=>{
-  item.addEventListener('click', ()=>{
-    document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
-    item.classList.add('active');
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    const page = item.dataset.page;
-    document.getElementById('page-'+page).classList.add('active');
-    document.getElementById('pageTitle').textContent = item.textContent.trim();
-    document.getElementById('sidebar').classList.remove('open');
-    if(page==='dashboard') renderDashboard();
-    if(page==='calendar') renderCalendar();
-    if(page==='bookings') renderBookingsTable();
-    if(page==='analytics') renderAnalytics();
-    if(page==='activity') renderFullFeed();
-    if(page==='settings') loadSettingsForm();
-  });
-});
-document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('sidebar').classList.toggle('open'));
+confidence.className =
+'confidence ' + confidenceClass;
 
-/* ============== THEME ============== */
-function applyTheme(){
-  document.body.setAttribute('data-theme', DB.settings.theme);
-  document.getElementById('toggleTheme').textContent = DB.settings.theme==='dark' ? '🌙 Dark' : '☀️ Light';
-}
-document.getElementById('toggleTheme').addEventListener('click', ()=>{
-  DB.settings.theme = DB.settings.theme==='dark' ? 'light':'dark';
-  saveData(); applyTheme();
-});
+confidence.innerHTML =
+'Confidence: ' + confidenceText;
 
-/* ============== WHATSAPP ============== */
-function applyWA(){
-  document.getElementById('waFloat').onclick = ()=> window.open('https://wa.me/'+DB.settings.whatsapp,'_blank');
+let percent =
+Math.min(valuation / 2500000,1);
+
+let degrees =
+220 * percent;
+
+document.getElementById('gauge').style.background =
+`conic-gradient(
+#d4af37 0deg,
+#d4af37 ${degrees}deg,
+rgba(255,255,255,.1) ${degrees}deg
+)`;
+
+let insight =
+"Strong residential demand with stable pricing trends.";
+
+if(n >= 1.8)
+insight =
+"Premium location detected. Luxury properties in this zone typically command higher buyer demand and stronger appreciation potential.";
+
+if(s > 3500)
+insight =
+"Large property footprint detected. High-value buyers may be targeted for maximum return.";
+
+if(confidenceText === "Low")
+insight =
+"Additional market data may be required for greater valuation accuracy.";
+
+document.getElementById('insight').innerText =
+insight;
+
 }
 
-/* ============== STAT CARDS ============== */
-function renderDashboard(){
-  const now = new Date();
-  const ym = now.toISOString().slice(0,7);
-  const bookings = DB.events.filter(e=>e.type==='booking');
-  const blocked = DB.events.filter(e=>e.type==='blocked');
-  const owner = DB.events.filter(e=>e.type==='owner');
-  const maint = DB.events.filter(e=>e.type==='maintenance');
-  let maintDays=0; maint.forEach(m=> maintDays += eachDate(m.start,m.end).length);
+sqft.addEventListener('input',updateEstimator);
+bedrooms.addEventListener('input',updateEstimator);
+bathrooms.addEventListener('input',updateEstimator);
+area.addEventListener('change',updateEstimator);
 
-  const daysInMonth = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
-  let occupied = 0;
-  for(let d=1; d<=daysInMonth; d++){
-    const dateStr = fmtDate(new Date(now.getFullYear(), now.getMonth(), d));
-    if(DB.events.some(e=> (e.type==='booking'||e.type==='blocked'||e.type==='owner'||e.type==='maintenance') && dateStr>=e.start && dateStr<=e.end)) occupied++;
-  }
-  const occPct = Math.round((occupied/daysInMonth)*100);
+updateEstimator();
 
-  const todayStr = fmtDate(now);
-  const upcoming = bookings.filter(b=> b.start >= todayStr).sort((a,b)=>a.start.localeCompare(b.start)).slice(0,5);
-
-  const cards = [
-    {ico:'📋',val:bookings.length,lbl:'Total Bookings'},
-    {ico:'🚫',val:blocked.length,lbl:'Blocked Dates'},
-    {ico:'🛏️',val:owner.length,lbl:'Owner Stays'},
-    {ico:'🛠️',val:maintDays,lbl:'Maintenance Days'},
-    {ico:'📈',val:occPct+'%',lbl:'Occupancy (This Month)'},
-    {ico:'🛫',val:upcoming.length,lbl:'Upcoming Arrivals'},
-  ];
-  document.getElementById('statCards').innerHTML = cards.map(c=>`
-    <div class="card stat-card"><div class="ico">${c.ico}</div><div class="val">${c.val}</div><div class="lbl">${c.lbl}</div></div>
-  `).join('');
-
-  // mini cal = small render of current month calendar (reuse calendar render but in a div)
-  document.getElementById('miniCalWrap').innerHTML = buildCalendarHTML(now.getFullYear(), now.getMonth(), true);
-
-  document.getElementById('dashFeed').innerHTML = DB.log.slice(0,6).map(l=>`
-    <div class="feed-item"><div class="feed-dot"></div><div><div>${l.text}</div><div class="feed-time">${new Date(l.time).toLocaleString()}</div></div></div>
-  `).join('') || '<div style="color:var(--muted);font-size:13px;">No activity yet.</div>';
-}
-
-/* ============== CALENDAR ============== */
-let calYear, calMonth;
-const now0 = new Date();
-calYear = now0.getFullYear(); calMonth = now0.getMonth();
-
-function statusForDate(dateStr){
-  const ev = DB.events.find(e=> e.type!=='note' && dateStr>=e.start && dateStr<=e.end);
-  if(!ev) return null;
-  return ev;
-}
-
-function buildCalendarHTML(year, month, mini){
-  const first = new Date(year, month, 1);
-  const startDow = first.getDay();
-  const daysInMonth = new Date(year, month+1, 0).getDate();
-  const prevDays = new Date(year, month, 0).getDate();
-  const todayStr = fmtDate(new Date());
-
-  let cells = [];
-  for(let i=startDow-1;i>=0;i--){
-    cells.push({day: prevDays-i, other:true});
-  }
-  for(let d=1; d<=daysInMonth; d++){
-    cells.push({day:d, other:false, full: fmtDate(new Date(year,month,d))});
-  }
-  while(cells.length % 7 !== 0){
-    const idx = cells.length - (startDow+daysInMonth);
-    cells.push({day: idx+1, other:true});
-  }
-
-  const dow = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  let html = '';
-  if(!mini){
-    document.getElementById('calDow').innerHTML = dow.map(d=>`<div class="cal-dow">${d}</div>`).join('');
-  }
-  html += cells.map(c=>{
-    if(c.other) return `<div class="cal-day other"><div class="dnum">${c.day}</div></div>`;
-    const dateStr = c.full;
-    const dayEvents = DB.events.filter(e=> dateStr>=e.start && dateStr<=e.end);
-    const isToday = dateStr===todayStr;
-    const evtsHtml = dayEvents.slice(0,mini?1:3).map(e=>{
-      const cls = e.type==='booking'?'reserved':e.type==='blocked'?'blocked':e.type==='owner'?'owner':e.type==='maintenance'?'maintenance':'note';
-      const label = e.type==='booking'? (e.guest||'Booking') : e.type==='blocked'? (e.reason||'Blocked') : e.type==='owner'? 'Owner Stay' : e.type==='maintenance'? (e.reason||'Maintenance') : (e.notes||'Note');
-      return `<div class="evt ${cls}">${label}</div>`;
-    }).join('');
-    return `<div class="cal-day ${isToday?'today':''}" data-date="${dateStr}" onclick="openDayModal('${dateStr}')">
-      <div class="dnum">${c.day}</div>
-      <div class="events">${evtsHtml}</div>
-    </div>`;
-  }).join('');
-  return html;
-}
-
-function renderCalendar(){
-  document.getElementById('calMonthLabel').textContent = new Date(calYear,calMonth).toLocaleString('en-GB',{month:'long',year:'numeric'});
-  document.getElementById('calDow').innerHTML = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div class="cal-dow">${d}</div>`).join('');
-  document.getElementById('calGrid').innerHTML = buildCalendarHTML(calYear, calMonth, false);
-  if(document.getElementById('bulkRows') && document.getElementById('bulkRows').children.length===0){
-    addBulkRow();
-  }
-}
-document.getElementById('prevMonth').addEventListener('click',()=>{ calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderCalendar(); });
-document.getElementById('nextMonth').addEventListener('click',()=>{ calMonth++; if(calMonth>11){calMonth=0;calYear++;} renderCalendar(); });
-document.getElementById('todayBtn').addEventListener('click',()=>{ const n=new Date(); calYear=n.getFullYear(); calMonth=n.getMonth(); renderCalendar(); });
-function populateBulkAdminSelect(){
-  const sel = document.getElementById('bulkBlockAdmin');
-  if(sel) sel.innerHTML = ADMINS.map(a=>`<option ${a===DB.settings.defaultAdmin?'selected':''}>${a}</option>`).join('');
-}
-
-let bulkRowCount = 0;
-function addBulkRow(fromVal, toVal){
-  bulkRowCount++;
-  const rowId = 'bulkrow_'+bulkRowCount;
-  const wrap = document.createElement('div');
-  wrap.className = 'form-grid';
-  wrap.id = rowId;
-  wrap.style.marginBottom = '8px';
-  wrap.style.alignItems = 'end';
-  wrap.innerHTML = `
-    <div class="form-row"><label>From Date</label><input type="date" class="bulk-from" value="${fromVal||''}"></div>
-    <div class="form-row" style="display:flex;gap:8px;align-items:center;">
-      <div style="flex:1;"><label>To Date</label><input type="date" class="bulk-to" value="${toVal||''}"></div>
-      <button class="icon-btn" title="Remove this line" onclick="document.getElementById('${rowId}').remove()" style="font-size:18px;margin-top:18px;">🗑️</button>
-    </div>
-  `;
-  document.getElementById('bulkRows').appendChild(wrap);
-}
-document.getElementById('addBulkRowBtn').addEventListener('click', ()=> addBulkRow());
-
-document.getElementById('bulkBlockBtn').addEventListener('click', ()=>{
-  const reason = document.getElementById('bulkBlockReason').value || 'Blocked';
-  const managedBy = document.getElementById('bulkBlockAdmin').value || DB.settings.defaultAdmin;
-  const fromInputs = document.querySelectorAll('#bulkRows .bulk-from');
-  const toInputs = document.querySelectorAll('#bulkRows .bulk-to');
-
-  let success = [], failed = [], conflicts = [];
-
-  fromInputs.forEach((fromEl, i)=>{
-    const start = fromEl.value;
-    const end = toInputs[i].value || start;
-    if(!start){ return; } // skip empty rows silently
-    if(end < start){ failed.push(`${start} (To date is before From date)`); return; }
-    const conflict = blockingEventsOnRange(start, end);
-    if(conflict.length){ conflicts.push(`${pretty(start)} → ${pretty(end)}`); return; }
-    const ev = { id: uid(), type:'blocked', start, end, reason, managedBy, createdAt: new Date().toISOString() };
-    DB.events.push(ev);
-    success.push(`${pretty(start)}${end!==start? ' → '+pretty(end):''}`);
-  });
-
-  if(success.length){
-    saveData();
-    addLog(`${managedBy} blocked ${success.length} date range(s): ${success.join(', ')}`);
-  }
-
-  let resultHtml = '';
-  if(success.length) resultHtml += `<div style="color:var(--green);margin-bottom:4px;">✅ Blocked: ${success.join(' | ')}</div>`;
-  if(conflicts.length) resultHtml += `<div style="color:var(--orange);margin-bottom:4px;">⚠️ Skipped (already booked/blocked): ${conflicts.join(' | ')}</div>`;
-  if(failed.length) resultHtml += `<div style="color:var(--red);">❌ Problem: ${failed.join(' | ')}</div>`;
-  if(!success.length && !conflicts.length && !failed.length) resultHtml = `<div style="color:var(--muted);">Please fill in at least one "From Date".</div>`;
-  document.getElementById('bulkBlockResult').innerHTML = resultHtml;
-
-  if(success.length){
-    toast(`Blocked ${success.length} date range(s) successfully.`);
-    document.getElementById('bulkRows').innerHTML = '';
-    addBulkRow();
-    refreshAll();
-  }
-});
-
-document.getElementById('printCalBtn').addEventListener('click',()=> window.print());
-document.getElementById('pdfCalBtn').addEventListener('click',()=>{ toast('Use your browser Print dialog → "Save as PDF" to download the calendar.'); window.print(); });
-
-/* ============== DAY MODAL / ACTIONS ============== */
-let modalDate = null;
-
-function openDayModal(dateStr){
-  modalDate = dateStr;
-  const existing = DB.events.filter(e=> dateStr>=e.start && dateStr<=e.end);
-  const overlay = document.getElementById('overlay');
-  overlay.innerHTML = `
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <h3>${pretty(dateStr)}</h3>
-    <div class="sub">Choose an action for this date</div>
-    ${existing.length? `<div style="margin-bottom:14px;">
-      <div style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:6px;">EXISTING EVENTS</div>
-      ${existing.map(e=>`
-        <div class="existing-evt">
-          <div><span class="badge ${e.type==='booking'?'reserved':e.type}">${labelType(e.type)}</span> ${eventTitle(e)}</div>
-          <button class="btn btn-sm btn-danger" onclick="removeEvent('${e.id}')">Remove</button>
-        </div>
-      `).join('')}
-    </div>` : ''}
-    <div class="action-grid">
-      <div class="action-tile" onclick="showForm('booking')"><div class="ic">🛎️</div><div class="tt">Create Booking</div></div>
-      <div class="action-tile" onclick="showForm('blocked')"><div class="ic">🚫</div><div class="tt">Block Date</div></div>
-      <div class="action-tile" onclick="showForm('owner')"><div class="ic">🛏️</div><div class="tt">Owner Stay</div></div>
-      <div class="action-tile" onclick="showForm('maintenance')"><div class="ic">🛠️</div><div class="tt">Maintenance</div></div>
-      <div class="action-tile" onclick="showForm('note')" style="grid-column:1/3;"><div class="ic">📝</div><div class="tt">Add Note</div></div>
-    </div>
-    <div id="formArea"></div>
-  </div>`;
-  overlay.classList.add('show');
-}
-function labelType(t){ return t==='booking'?'Reserved':t==='blocked'?'Blocked':t==='owner'?'Owner Stay':t==='maintenance'?'Maintenance':'Note'; }
-function eventTitle(e){
-  if(e.type==='booking') return (e.guest||'Guest')+' · '+pretty(e.start)+' → '+pretty(e.end);
-  if(e.type==='note') return e.notes;
-  return (e.reason||labelType(e.type))+' · '+pretty(e.start)+' → '+pretty(e.end);
-}
-function closeModal(){ document.getElementById('overlay').classList.remove('show'); document.getElementById('overlay').innerHTML=''; }
-
-function showForm(type){
-  const area = document.getElementById('formArea');
-  const defAdmin = document.getElementById('currentAdmin').value || DB.settings.defaultAdmin;
-  if(type==='booking'){
-    area.innerHTML = `
-      <div class="form-row"><label>Guest Name</label><input type="text" id="f_guest"></div>
-      <div class="form-grid">
-        <div class="form-row"><label>Phone Number</label><input type="tel" id="f_phone"></div>
-        <div class="form-row"><label>Email Address</label><input type="email" id="f_email"></div>
-      </div>
-      <div class="form-grid">
-        <div class="form-row"><label>Check-In Date</label><input type="date" id="f_in" value="${modalDate}"></div>
-        <div class="form-row"><label>Check-Out Date</label><input type="date" id="f_out"></div>
-      </div>
-      <div class="form-grid">
-        <div class="form-row"><label>Number Of Guests</label><input type="number" id="f_guests" min="1" value="2"></div>
-        <div class="form-row"><label>Booking Source</label><select id="f_source">${SOURCES.map(s=>`<option>${s}</option>`).join('')}</select></div>
-      </div>
-      <div class="form-grid">
-        <div class="form-row"><label>Total Amount (${DB.settings.currency})</label><input type="number" id="f_amount" min="0" step="0.01"></div>
-        <div class="form-row"><label>Managed By</label><select id="f_managed">${ADMINS.map(a=>`<option ${a===defAdmin?'selected':''}>${a}</option>`).join('')}</select></div>
-      </div>
-      <div class="form-row"><label>Notes</label><textarea id="f_notes" rows="2"></textarea></div>
-      <div class="modal-foot"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="saveBooking()">Save Booking</button></div>
-    `;
-  } else if(type==='blocked'){
-    area.innerHTML = `
-      <div class="form-grid">
-        <div class="form-row"><label>Start Date</label><input type="date" id="f_in" value="${modalDate}"></div>
-        <div class="form-row"><label>End Date</label><input type="date" id="f_out" value="${modalDate}"></div>
-      </div>
-      <div class="form-row"><label>Reason</label><input type="text" id="f_reason" placeholder="e.g. Personal block"></div>
-      <div class="form-row"><label>Admin Name</label><select id="f_managed">${ADMINS.map(a=>`<option ${a===defAdmin?'selected':''}>${a}</option>`).join('')}</select></div>
-      <div class="modal-foot"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="saveSimple('blocked')">Block Date</button></div>
-    `;
-  } else if(type==='owner'){
-    area.innerHTML = `
-      <div class="form-grid">
-        <div class="form-row"><label>Start Date</label><input type="date" id="f_in" value="${modalDate}"></div>
-        <div class="form-row"><label>End Date</label><input type="date" id="f_out" value="${modalDate}"></div>
-      </div>
-      <div class="form-row"><label>Notes</label><textarea id="f_notes" rows="2"></textarea></div>
-      <div class="form-row"><label>Admin Name</label><select id="f_managed">${ADMINS.map(a=>`<option ${a===defAdmin?'selected':''}>${a}</option>`).join('')}</select></div>
-      <div class="modal-foot"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="saveSimple('owner')">Save Owner Stay</button></div>
-    `;
-  } else if(type==='maintenance'){
-    area.innerHTML = `
-      <div class="form-grid">
-        <div class="form-row"><label>Start Date</label><input type="date" id="f_in" value="${modalDate}"></div>
-        <div class="form-row"><label>End Date</label><input type="date" id="f_out" value="${modalDate}"></div>
-      </div>
-      <div class="form-row"><label>Reason</label><input type="text" id="f_reason" placeholder="e.g. Pool maintenance"></div>
-      <div class="form-row"><label>Admin Name</label><select id="f_managed">${ADMINS.map(a=>`<option ${a===defAdmin?'selected':''}>${a}</option>`).join('')}</select></div>
-      <div class="modal-foot"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="saveSimple('maintenance')">Save Maintenance</button></div>
-    `;
-  } else if(type==='note'){
-    area.innerHTML = `
-      <div class="form-row"><label>Note</label><textarea id="f_notes" rows="3" placeholder="Internal note for this date"></textarea></div>
-      <div class="form-row"><label>Admin Name</label><select id="f_managed">${ADMINS.map(a=>`<option ${a===defAdmin?'selected':''}>${a}</option>`).join('')}</select></div>
-      <div class="modal-foot"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="saveNote()">Save Note</button></div>
-    `;
-  }
-}
-
-function validateRange(start,end){
-  if(!start || !end) { toast('Please fill in both dates.'); return false; }
-  if(end < start){ toast('Check-out / end date must be after start date.'); return false; }
-  return true;
-}
-
-function saveBooking(){
-  const guest = document.getElementById('f_guest').value.trim();
-  const start = document.getElementById('f_in').value;
-  const end = document.getElementById('f_out').value;
-  if(!guest){ toast('Guest name is required.'); return; }
-  if(!validateRange(start,end)) return;
-  if(blockingEventsOnRange(start,end).length){ toast('⚠️ These dates conflict with an existing booking or blocked period.'); return; }
-  const ev = {
-    id: uid(), type:'booking', start, end,
-    guest, phone: document.getElementById('f_phone').value,
-    email: document.getElementById('f_email').value,
-    guests: document.getElementById('f_guests').value,
-    source: document.getElementById('f_source').value,
-    amount: document.getElementById('f_amount').value || 0,
-    notes: document.getElementById('f_notes').value,
-    managedBy: document.getElementById('f_managed').value,
-    createdAt: new Date().toISOString()
-  };
-  DB.events.push(ev); saveData();
-  addLog(`${ev.managedBy} added booking for ${guest} (${pretty(start)} → ${pretty(end)})`);
-  toast('Booking saved.'); closeModal(); refreshAll();
-}
-
-function saveSimple(type){
-  const start = document.getElementById('f_in').value;
-  const end = document.getElementById('f_out').value;
-  if(!validateRange(start,end)) return;
-  const conflict = blockingEventsOnRange(start,end).filter(e=> !(type!=='blocked' && e.type==='blocked'));
-  if(conflict.length){ toast('⚠️ These dates conflict with an existing event.'); return; }
-  const managedBy = document.getElementById('f_managed').value;
-  const ev = { id: uid(), type, start, end, managedBy, createdAt: new Date().toISOString() };
-  if(type==='blocked'){ ev.reason = document.getElementById('f_reason').value || 'Blocked'; }
-  if(type==='maintenance'){ ev.reason = document.getElementById('f_reason').value || 'Maintenance'; }
-  if(type==='owner'){ ev.notes = document.getElementById('f_notes').value; }
-  DB.events.push(ev); saveData();
-  const verbMap = {blocked:'blocked',owner:'added owner stay for',maintenance:'added maintenance for'};
-  addLog(`${managedBy} ${verbMap[type]} ${pretty(start)}${end!==start?' → '+pretty(end):''}`);
-  toast('Saved successfully.'); closeModal(); refreshAll();
-}
-
-function saveNote(){
-  const notes = document.getElementById('f_notes').value.trim();
-  if(!notes){ toast('Note cannot be empty.'); return; }
-  const managedBy = document.getElementById('f_managed').value;
-  const ev = { id: uid(), type:'note', start: modalDate, end: modalDate, notes, managedBy, createdAt: new Date().toISOString() };
-  DB.events.push(ev); saveData();
-  addLog(`${managedBy} added a note on ${pretty(modalDate)}`);
-  toast('Note added.'); closeModal(); refreshAll();
-}
-
-function removeEvent(id){
-  const ev = DB.events.find(e=>e.id===id);
-  if(!ev) return;
-  if(!confirm('Remove this event?')) return;
-  DB.events = DB.events.filter(e=>e.id!==id);
-  saveData();
-  const adminNow = document.getElementById('currentAdmin').value;
-  addLog(`${adminNow} removed ${labelType(ev.type).toLowerCase()} (${pretty(ev.start)})`);
-  toast('Removed.');
-  closeModal(); refreshAll();
-}
-
-/* New Booking button (top) opens today's modal directly to booking form */
-document.getElementById('newBookingBtn').addEventListener('click', ()=>{
-  openDayModal(fmtDate(new Date()));
-  showForm('booking');
-});
-
-/* ============== BOOKINGS TABLE ============== */
-let currentFilter = 'all';
-function renderBookingsTable(){
-  const q = (document.getElementById('searchInput').value || '').toLowerCase();
-  let rows = DB.events.filter(e=>e.type!=='note');
-  if(currentFilter!=='all') rows = rows.filter(e=> (currentFilter==='reserved'? e.type==='booking' : e.type===currentFilter));
-  if(q){
-    rows = rows.filter(e=>{
-      return (e.guest||'').toLowerCase().includes(q) ||
-        e.start.includes(q) || e.end.includes(q) ||
-        (e.source||'').toLowerCase().includes(q) ||
-        (e.managedBy||'').toLowerCase().includes(q) ||
-        (e.reason||'').toLowerCase().includes(q);
-    });
-  }
-  rows = rows.sort((a,b)=>b.start.localeCompare(a.start));
-  document.getElementById('bookingsBody').innerHTML = rows.map(e=>{
-    const statusCls = e.type==='booking'?'reserved':e.type;
-    const label = e.type==='booking'?'Reserved':e.type==='blocked'?'Blocked':e.type==='owner'?'Owner Stay':'Maintenance';
-    return `<tr>
-      <td>${e.guest || e.reason || label}</td>
-      <td>${pretty(e.start)}</td>
-      <td>${pretty(e.end)}</td>
-      <td>${e.guests||'-'}</td>
-      <td>${e.amount? DB.settings.currency+Number(e.amount).toLocaleString(): '-'}</td>
-      <td>${e.source||'-'}</td>
-      <td>${e.managedBy||'-'}</td>
-      <td><span class="badge ${statusCls}">${label}</span></td>
-      <td>
-        <button class="icon-btn" title="View" onclick="viewEvent('${e.id}')">👁️</button>
-        <button class="icon-btn" title="Edit" onclick="editEvent('${e.id}')">✏️</button>
-        <button class="icon-btn" title="Delete" onclick="removeEvent('${e.id}')">🗑️</button>
-      </td>
-    </tr>`;
-  }).join('') || `<tr><td colspan="9" style="text-align:center;color:var(--muted);padding:24px;">No records found.</td></tr>`;
-}
-document.getElementById('searchInput').addEventListener('input', renderBookingsTable);
-document.querySelectorAll('#filterChips .chip').forEach(c=>{
-  c.addEventListener('click', ()=>{
-    document.querySelectorAll('#filterChips .chip').forEach(x=>x.classList.remove('active'));
-    c.classList.add('active'); currentFilter = c.dataset.f; renderBookingsTable();
-  });
-});
-
-function viewEvent(id){
-  const e = DB.events.find(x=>x.id===id); if(!e) return;
-  alert(`Type: ${labelType(e.type)}\nDates: ${pretty(e.start)} → ${pretty(e.end)}\n` +
-    (e.guest? `Guest: ${e.guest}\nPhone: ${e.phone||'-'}\nEmail: ${e.email||'-'}\nGuests: ${e.guests||'-'}\nSource: ${e.source||'-'}\nAmount: ${e.amount?DB.settings.currency+e.amount:'-'}\n` : '') +
-    (e.reason? `Reason: ${e.reason}\n` : '') +
-    `Notes: ${e.notes||'-'}\nManaged By: ${e.managedBy||'-'}`);
-}
-
-function editEvent(id){
-  const e = DB.events.find(x=>x.id===id); if(!e) return;
-  modalDate = e.start;
-  openDayModal(e.start);
-  setTimeout(()=>{
-    showForm(e.type==='booking'?'booking':e.type);
-    if(document.getElementById('f_in')) document.getElementById('f_in').value = e.start;
-    if(document.getElementById('f_out')) document.getElementById('f_out').value = e.end;
-    if(e.type==='booking'){
-      document.getElementById('f_guest').value = e.guest||'';
-      document.getElementById('f_phone').value = e.phone||'';
-      document.getElementById('f_email').value = e.email||'';
-      document.getElementById('f_guests').value = e.guests||2;
-      document.getElementById('f_source').value = e.source||'Other';
-      document.getElementById('f_amount').value = e.amount||'';
-      document.getElementById('f_notes').value = e.notes||'';
-      document.getElementById('f_managed').value = e.managedBy||DB.settings.defaultAdmin;
-      // override save to update instead of create
-      const btn = document.querySelector('#formArea .btn-primary');
-      btn.textContent = 'Update Booking';
-      btn.setAttribute('onclick', `updateEvent('${id}')`);
-    } else {
-      if(document.getElementById('f_reason')) document.getElementById('f_reason').value = e.reason||'';
-      if(document.getElementById('f_notes')) document.getElementById('f_notes').value = e.notes||'';
-      document.getElementById('f_managed').value = e.managedBy||DB.settings.defaultAdmin;
-      const btn = document.querySelector('#formArea .btn-primary');
-      btn.textContent = 'Update';
-      btn.setAttribute('onclick', `updateEvent('${id}')`);
-    }
-  }, 10);
-}
-
-function updateEvent(id){
-  const e = DB.events.find(x=>x.id===id); if(!e) return;
-  const start = document.getElementById('f_in').value;
-  const end = document.getElementById('f_out').value;
-  if(!validateRange(start,end)) return;
-  if(blockingEventsOnRange(start,end,id).length){ toast('⚠️ Conflicts with another event.'); return; }
-  e.start = start; e.end = end;
-  if(e.type==='booking'){
-    e.guest = document.getElementById('f_guest').value;
-    e.phone = document.getElementById('f_phone').value;
-    e.email = document.getElementById('f_email').value;
-    e.guests = document.getElementById('f_guests').value;
-    e.source = document.getElementById('f_source').value;
-    e.amount = document.getElementById('f_amount').value;
-    e.notes = document.getElementById('f_notes').value;
-  } else {
-    if(document.getElementById('f_reason')) e.reason = document.getElementById('f_reason').value;
-    if(document.getElementById('f_notes')) e.notes = document.getElementById('f_notes').value;
-  }
-  e.managedBy = document.getElementById('f_managed').value;
-  saveData();
-  addLog(`${e.managedBy} edited ${labelType(e.type).toLowerCase()} (${pretty(e.start)})`);
-  toast('Updated.'); closeModal(); refreshAll();
-}
-
-/* ============== EXPORT / IMPORT / BACKUP ============== */
-function downloadJSON(obj, filename){
-  const blob = new Blob([JSON.stringify(obj,null,2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href=url; a.download=filename; a.click();
-  URL.revokeObjectURL(url);
-}
-document.getElementById('exportJsonBtn').addEventListener('click', ()=>downloadJSON(DB.events, 'vmoa_events.json'));
-document.getElementById('importJsonBtn').addEventListener('click', ()=>document.getElementById('importFileInput').click());
-document.getElementById('importFileInput').addEventListener('change', (ev)=>{
-  const file = ev.target.files[0]; if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ()=>{
-    try{
-      const data = JSON.parse(reader.result);
-      if(Array.isArray(data)){ DB.events = DB.events.concat(data); saveData(); addLog('Imported events from JSON file'); toast('Import successful.'); refreshAll(); }
-      else toast('Invalid JSON format.');
-    }catch(e){ toast('Failed to parse JSON.'); }
-  };
-  reader.readAsText(file);
-});
-document.getElementById('backupBtn').addEventListener('click', ()=>downloadJSON(DB, 'vmoa_full_backup.json'));
-document.getElementById('restoreBtn').addEventListener('click', ()=>document.getElementById('restoreFileInput').click());
-document.getElementById('restoreFileInput').addEventListener('change', (ev)=>{
-  const file = ev.target.files[0]; if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ()=>{
-    try{
-      const data = JSON.parse(reader.result);
-      if(data.events && data.settings){ DB = data; saveData(); toast('Restore successful.'); applyTheme(); applyWA(); refreshAll(); }
-      else toast('Invalid backup file.');
-    }catch(e){ toast('Failed to restore.'); }
-  };
-  reader.readAsText(file);
-});
-
-/* ============== ACTIVITY LOG ============== */
-function renderFullFeed(){
-  document.getElementById('fullFeed').innerHTML = DB.log.map(l=>`
-    <div class="feed-item"><div class="feed-dot"></div><div><div>${l.text}</div><div class="feed-time">${new Date(l.time).toLocaleString()}</div></div></div>
-  `).join('') || '<div style="color:var(--muted);font-size:13px;">No activity recorded yet.</div>';
-}
-document.getElementById('clearLogBtn').addEventListener('click', ()=>{
-  if(confirm('Permanently clear the entire activity log? This cannot be undone.')){
-    DB.log = []; saveData(); renderFullFeed(); toast('Activity log cleared.');
-  }
-});
-
-/* ============== ANALYTICS ============== */
-let chartRefs = {};
-function renderAnalytics(){
-  Object.values(chartRefs).forEach(c=>c && c.destroy());
-  const months = [];
-  const now = new Date();
-  for(let i=5;i>=0;i--){
-    const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
-    months.push({label:d.toLocaleString('en-GB',{month:'short',year:'2-digit'}), year:d.getFullYear(), month:d.getMonth()});
-  }
-  const occData = months.map(m=>{
-    const daysInMonth = new Date(m.year, m.month+1, 0).getDate();
-    let occ=0;
-    for(let d=1; d<=daysInMonth; d++){
-      const ds = fmtDate(new Date(m.year,m.month,d));
-      if(DB.events.some(e=> e.type!=='note' && ds>=e.start && ds<=e.end)) occ++;
-    }
-    return Math.round((occ/daysInMonth)*100);
-  });
-  const revData = months.map(m=>{
-    return DB.events.filter(e=>e.type==='booking' && new Date(e.start).getFullYear()===m.year && new Date(e.start).getMonth()===m.month)
-      .reduce((s,e)=>s+Number(e.amount||0),0);
-  });
-  const trendData = months.map(m=>{
-    return DB.events.filter(e=>e.type==='booking' && new Date(e.start).getFullYear()===m.year && new Date(e.start).getMonth()===m.month).length;
-  });
-  const sourceCounts = {};
-  SOURCES.forEach(s=>sourceCounts[s]=0);
-  DB.events.filter(e=>e.type==='booking').forEach(e=>{ sourceCounts[e.source]=(sourceCounts[e.source]||0)+1; });
-
-  const gold = '#c9a24b';
-  chartRefs.occ = new Chart(document.getElementById('chartOccupancy'), {
-    type:'bar', data:{labels: months.map(m=>m.label), datasets:[{label:'Occupancy %', data:occData, backgroundColor:gold, borderRadius:6}]},
-    options:{plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true,max:100}}}
-  });
-  chartRefs.src = new Chart(document.getElementById('chartSources'), {
-    type:'doughnut', data:{labels:Object.keys(sourceCounts), datasets:[{data:Object.values(sourceCounts), backgroundColor:['#c9a24b','#4fa3e0','#3ec77a','#ef5b6f','#f0a649','#6c5dd3','#8a8f9c']}]},
-    options:{plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{size:10}}}}}
-  });
-  chartRefs.rev = new Chart(document.getElementById('chartRevenue'), {
-    type:'line', data:{labels: months.map(m=>m.label), datasets:[{label:'Revenue ('+DB.settings.currency+')', data:revData, borderColor:'#4fa3e0', backgroundColor:'rgba(79,163,224,0.15)', fill:true, tension:.35}]},
-    options:{plugins:{legend:{display:false}}}
-  });
-  chartRefs.trend = new Chart(document.getElementById('chartTrends'), {
-    type:'line', data:{labels: months.map(m=>m.label), datasets:[{label:'Reservations', data:trendData, borderColor:'#3ec77a', backgroundColor:'rgba(62,199,122,0.15)', fill:true, tension:.35}]},
-    options:{plugins:{legend:{display:false}}}
-  });
-}
-
-/* ============== SETTINGS ============== */
-function loadSettingsForm(){
-  document.getElementById('setVillaName').value = DB.settings.villaName;
-  document.getElementById('setWhatsapp').value = DB.settings.whatsapp;
-  document.getElementById('setCurrency').value = DB.settings.currency;
-  document.getElementById('setDefaultAdmin').value = DB.settings.defaultAdmin;
-  document.getElementById('setTheme').value = DB.settings.theme;
-}
-document.getElementById('saveSettingsBtn').addEventListener('click', ()=>{
-  DB.settings.villaName = document.getElementById('setVillaName').value || 'Villa Mont Oreb Alain';
-  DB.settings.whatsapp = document.getElementById('setWhatsapp').value.replace(/\D/g,'');
-  DB.settings.currency = document.getElementById('setCurrency').value || '$';
-  DB.settings.defaultAdmin = document.getElementById('setDefaultAdmin').value;
-  DB.settings.theme = document.getElementById('setTheme').value;
-  saveData(); applyTheme(); applyWA();
-  document.querySelector('.brand .name').textContent = DB.settings.villaName;
-  toast('Settings saved.');
-});
-
-/* ============== REFRESH ALL ============== */
-function refreshAll(){
-  renderDashboard(); renderCalendar(); renderBookingsTable();
-  if(document.getElementById('page-analytics').classList.contains('active')) renderAnalytics();
-  renderFullFeed();
-}
-
-/* ============== INIT ============== */
-function init(){
-  document.getElementById('yearFoot').textContent = new Date().getFullYear();
-  document.querySelector('.brand .name').textContent = DB.settings.villaName;
-  document.getElementById('currentAdmin').value = DB.settings.defaultAdmin;
-  applyTheme(); applyWA(); populateBulkAdminSelect();
-  renderDashboard(); renderCalendar(); renderBookingsTable(); renderFullFeed();
-}
-init();
 </script>
+
 </body>
 </html>
