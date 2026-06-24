@@ -1,227 +1,631 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Mauritius AI Rental Estimator</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Real Estate Listing Generator</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
 
-<style>
-body{
-font-family: Arial, sans-serif;
-margin:0;
-background:#0f172a;
-color:white;
-}
+    body {
+      background: #f0f4fa;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 30px 20px;
+    }
 
-.container{
-max-width:900px;
-margin:auto;
-padding:20px;
-}
+    .app {
+      max-width: 1200px;
+      width: 100%;
+      background: white;
+      border-radius: 32px;
+      box-shadow: 0 20px 60px rgba(0, 20, 50, 0.12);
+      padding: 35px 40px 50px;
+      transition: all 0.2s;
+    }
 
-.card{
-background:#1e293b;
-padding:20px;
-border-radius:15px;
-box-shadow:0 10px 30px rgba(0,0,0,0.3);
-}
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #0a1e3c;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    h1 i {
+      color: #2a7de1;
+      background: #e6f0ff;
+      padding: 12px;
+      border-radius: 16px;
+      font-size: 1.6rem;
+    }
+    .subtitle {
+      color: #5b6f8f;
+      margin-bottom: 30px;
+      font-size: 1rem;
+      border-left: 4px solid #2a7de1;
+      padding-left: 16px;
+      background: #f8faff;
+      border-radius: 0 12px 12px 0;
+      line-height: 1.5;
+    }
 
-h1{
-text-align:center;
-color:#fbbf24;
-}
+    /* ----- FORM GRID ----- */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px 25px;
+      margin-bottom: 28px;
+    }
 
-label{
-display:block;
-margin-top:15px;
-font-weight:bold;
-}
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .field-group label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #1f334f;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .field-group label i {
+      color: #2a7de1;
+      width: 20px;
+      text-align: center;
+    }
+    .field-group input,
+    .field-group select,
+    .field-group textarea {
+      padding: 10px 14px;
+      border: 1.5px solid #dce3ed;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      transition: 0.2s;
+      background: #fafcff;
+      width: 100%;
+    }
+    .field-group input:focus,
+    .field-group select:focus,
+    .field-group textarea:focus {
+      outline: none;
+      border-color: #2a7de1;
+      box-shadow: 0 0 0 4px rgba(42, 125, 225, 0.12);
+      background: white;
+    }
+    .field-group textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+    .field-group .hint {
+      font-size: 0.75rem;
+      color: #7a8aa8;
+      margin-top: 2px;
+    }
+    .full-width {
+      grid-column: 1 / -1;
+    }
 
-select,input{
-width:100%;
-padding:10px;
-margin-top:5px;
-border-radius:8px;
-border:none;
-}
+    /* ----- BUTTONS ----- */
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin: 12px 0 30px;
+    }
+    .btn {
+      padding: 12px 28px;
+      border: none;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #eef3fc;
+      color: #1a2b44;
+    }
+    .btn-primary {
+      background: #1a3b6b;
+      color: white;
+      box-shadow: 0 8px 18px rgba(26, 59, 107, 0.2);
+    }
+    .btn-primary:hover {
+      background: #0f2a4f;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(26, 59, 107, 0.25);
+    }
+    .btn-success {
+      background: #0b8a4b;
+      color: white;
+      box-shadow: 0 8px 18px rgba(11, 138, 75, 0.2);
+    }
+    .btn-success:hover {
+      background: #08703b;
+      transform: translateY(-2px);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #d0dae8;
+    }
+    .btn-outline:hover {
+      background: #f0f4fc;
+      border-color: #a0b2cc;
+    }
+    .btn i {
+      font-size: 1.1rem;
+    }
 
-.result{
-margin-top:20px;
-padding:15px;
-background:#0b1220;
-border-radius:10px;
-text-align:center;
-}
+    /* ----- LISTING PREVIEW ----- */
+    .listing-preview {
+      margin-top: 30px;
+      border-top: 2px dashed #dce3ed;
+      padding-top: 30px;
+    }
+    .listing-preview.hidden {
+      display: none;
+    }
 
-.big{
-font-size:28px;
-color:#22c55e;
-font-weight:bold;
-}
+    .listing-card {
+      background: linear-gradient(145deg, #ffffff, #f9fcff);
+      border-radius: 28px;
+      padding: 30px 35px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(42, 125, 225, 0.10);
+      position: relative;
+    }
+    .listing-card .badge {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      background: #2a7de1;
+      color: white;
+      padding: 6px 18px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 12px rgba(42, 125, 225, 0.25);
+    }
+    .listing-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #0a1e3c;
+      margin-bottom: 6px;
+      padding-right: 100px;
+    }
+    .listing-sub {
+      color: #4e6885;
+      font-size: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px 28px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #e6edf6;
+      padding-bottom: 16px;
+    }
+    .listing-sub span i {
+      color: #2a7de1;
+      margin-right: 6px;
+      width: 20px;
+    }
+    .listing-desc {
+      background: #f5f9ff;
+      padding: 16px 20px;
+      border-radius: 18px;
+      margin: 14px 0 18px;
+      color: #1f334f;
+      line-height: 1.7;
+      border-left: 4px solid #2a7de1;
+    }
+    .listing-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin: 14px 0 20px;
+    }
+    .detail-item {
+      background: white;
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 1px solid #e6edf6;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+    }
+    .detail-item i {
+      color: #2a7de1;
+      width: 24px;
+      text-align: center;
+    }
+    .listing-price {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #0a1e3c;
+      margin: 10px 0 8px;
+    }
+    .listing-price small {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #5b6f8f;
+      margin-left: 8px;
+    }
+    .listing-contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid #e6edf6;
+      color: #2b405e;
+    }
+    .listing-contact i {
+      color: #2a7de1;
+      margin-right: 6px;
+    }
 
-.small{
-color:#94a3b8;
-}
+    .whatsapp-btn {
+      margin-top: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25D366;
+      color: white;
+      padding: 12px 28px;
+      border-radius: 40px;
+      border: none;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.15s;
+      box-shadow: 0 6px 16px rgba(37, 211, 102, 0.3);
+    }
+    .whatsapp-btn:hover {
+      background: #1da851;
+      transform: scale(1.02);
+    }
 
-button{
-width:100%;
-padding:15px;
-margin-top:20px;
-background:#25D366;
-border:none;
-color:white;
-font-size:16px;
-border-radius:10px;
-cursor:pointer;
-}
-
-button:hover{
-background:#1ea952;
-}
-</style>
+    /* ----- RESPONSIVE ----- */
+    @media (max-width: 640px) {
+      .app {
+        padding: 20px 16px;
+      }
+      h1 {
+        font-size: 1.5rem;
+        flex-wrap: wrap;
+      }
+      .listing-title {
+        font-size: 1.4rem;
+        padding-right: 0;
+      }
+      .listing-card .badge {
+        position: static;
+        display: inline-block;
+        margin-bottom: 12px;
+      }
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .actions {
+        flex-direction: column;
+      }
+      .btn {
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
-<div class="card">
+<div class="app">
+  <h1>
+    <i class="fas fa-robot"></i>
+    AI Listing Generator
+  </h1>
+  <div class="subtitle">
+    <i class="fas fa-pen-fancy" style="margin-right: 10px;"></i>
+    Fill in the details below – we'll craft a professional property listing for you.
+  </div>
 
-<h1>🏠 Mauritius AI Rental Estimator</h1>
+  <!-- ============ FORM ============ -->
+  <form id="listingForm">
+    <div class="form-grid">
 
-<label>Town / Area</label>
-<select id="town">
-<option>Port Louis</option>
-<option>Curepipe</option>
-<option>Vacoas</option>
-<option>Quatre Bornes</option>
-<option>Rose Hill</option>
-<option>Ebene</option>
-<option>Grand Baie</option>
-<option>Flic en Flac</option>
-<option>Tamarin</option>
-<option>Triolet</option>
-<option>Flacq</option>
-<option>Mahebourg</option>
-</select>
+      <!-- Property Type -->
+      <div class="field-group">
+        <label><i class="fas fa-building"></i> Property Type</label>
+        <select id="propertyType" required>
+          <option value="Apartment">Apartment</option>
+          <option value="House">House</option>
+          <option value="Villa">Villa</option>
+          <option value="Land">Land</option>
+          <option value="Studio">Studio</option>
+          <option value="Penthouse">Penthouse</option>
+        </select>
+      </div>
 
-<label>Property Type</label>
-<select id="type">
-<option value="studio">Studio</option>
-<option value="2br">2 Bedroom</option>
-<option value="3br">3 Bedroom</option>
-<option value="villa">Villa</option>
-</select>
+      <!-- Village / Town -->
+      <div class="field-group">
+        <label><i class="fas fa-map-pin"></i> Village / Town</label>
+        <input type="text" id="village" placeholder="e.g. Grand Baie" required />
+      </div>
 
-<label>Furnished</label>
-<select id="furnished">
-<option value="no">Unfurnished</option>
-<option value="yes">Furnished</option>
-</select>
+      <!-- Rooms -->
+      <div class="field-group">
+        <label><i class="fas fa-door-open"></i> Number of Rooms</label>
+        <select id="rooms">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3" selected>3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6+</option>
+        </select>
+      </div>
 
-<label>Extras</label>
-<select id="extras">
-<option value="0">None</option>
-<option value="2000">Parking</option>
-<option value="4000">Parking + AC</option>
-<option value="8000">Sea View / Premium</option>
-</select>
+      <!-- Bathrooms -->
+      <div class="field-group">
+        <label><i class="fas fa-bath"></i> Bathrooms</label>
+        <select id="bathrooms">
+          <option value="1">1</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5+</option>
+        </select>
+      </div>
 
-<div class="result">
-<div class="small">Estimated Monthly Rent</div>
-<div class="big" id="price">Rs 0</div>
-<div id="confidence" class="small"></div>
-</div>
+      <!-- Furnished -->
+      <div class="field-group">
+        <label><i class="fas fa-couch"></i> Furnished</label>
+        <select id="furnished">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="Partially">Partially</option>
+        </select>
+      </div>
 
-<button onclick="whatsapp()">
-📲 Get Professional Valuation on WhatsApp
-</button>
+      <!-- Close to sea -->
+      <div class="field-group">
+        <label><i class="fas fa-water"></i> Close to Sea</label>
+        <select id="sea">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </div>
 
-</div>
+      <!-- Price -->
+      <div class="field-group">
+        <label><i class="fas fa-tag"></i> Price (in Rs or $)</label>
+        <input type="text" id="price" placeholder="e.g. 3,500,000" required />
+      </div>
+
+      <!-- Availability -->
+      <div class="field-group">
+        <label><i class="fas fa-clock"></i> Status</label>
+        <select id="status">
+          <option value="For Sale">For Sale</option>
+          <option value="For Rent">For Rent</option>
+          <option value="Sold">Sold</option>
+        </select>
+      </div>
+
+      <!-- Nearby amenities -->
+      <div class="field-group full-width">
+        <label><i class="fas fa-tree"></i> Nearby Amenities (comma separated)</label>
+        <input type="text" id="amenities" placeholder="e.g. school, supermarket, beach, hospital" />
+        <span class="hint">Mention key attractions close by.</span>
+      </div>
+
+      <!-- Description -->
+      <div class="field-group full-width">
+        <label><i class="fas fa-align-left"></i> Description</label>
+        <textarea id="description" rows="2" placeholder="A short description of the property..."></textarea>
+      </div>
+
+      <!-- Contact -->
+      <div class="field-group">
+        <label><i class="fas fa-user"></i> Contact Name</label>
+        <input type="text" id="contactName" placeholder="Your name" />
+      </div>
+      <div class="field-group">
+        <label><i class="fas fa-phone"></i> Phone</label>
+        <input type="text" id="contactPhone" placeholder="+230 5XXX XXXX" />
+      </div>
+      <div class="field-group">
+        <label><i class="fas fa-envelope"></i> Email</label>
+        <input type="email" id="contactEmail" placeholder="you@example.com" />
+      </div>
+
+    </div> <!-- end form-grid -->
+
+    <div class="actions">
+      <button type="submit" class="btn btn-primary"><i class="fas fa-magic"></i> Generate Listing</button>
+      <button type="reset" class="btn btn-outline"><i class="fas fa-undo"></i> Clear All</button>
+    </div>
+  </form>
+
+  <!-- ============ LISTING PREVIEW ============ -->
+  <div id="listingPreview" class="listing-preview hidden">
+    <div class="listing-card" id="listingCard">
+      <!-- dynamic content injected by JS -->
+    </div>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px;">
+      <button class="whatsapp-btn" id="whatsappBtn">
+        <i class="fab fa-whatsapp"></i> Send to WhatsApp
+      </button>
+      <button class="btn btn-outline" id="copyBtn"><i class="fas fa-copy"></i> Copy Listing</button>
+    </div>
+  </div>
 </div>
 
 <script>
+  (function() {
+    const form = document.getElementById('listingForm');
+    const previewDiv = document.getElementById('listingPreview');
+    const cardContainer = document.getElementById('listingCard');
+    const whatsappBtn = document.getElementById('whatsappBtn');
+    const copyBtn = document.getElementById('copyBtn');
 
-// BASE MARKET DATA (FROM YOUR INPUT)
-const data = {
-"Port Louis": {
-studio:10000,
-"2br":14000,
-"3br":15000,
-"3br_f":20000
-},
-"Curepipe":{
-"2br":15000
-},
-"Grand Baie":{
-"2br":22000,
-"2br_lux":28000,
-villa:65000
-},
-"Vacoas":{
-studio:8000,
-"2br":15000,
-"3br":18000
-},
-"Quatre Bornes":{
-"2br":16000,
-"3br":19000
-},
-"Flic en Flac":{
-"2br":20000,
-villa:55000
-}
-};
+    // Generate listing text (for WhatsApp & copy)
+    function generateListingText(data) {
+      const lines = [];
+      lines.push(`🏠 *${data.type} for ${data.status}*`);
+      lines.push(`📍 *Location:* ${data.village}`);
+      lines.push(`🛏️ *Rooms:* ${data.rooms}`);
+      lines.push(`🛁 *Bathrooms:* ${data.bathrooms}`);
+      lines.push(`🛋️ *Furnished:* ${data.furnished}`);
+      lines.push(`🌊 *Close to sea:* ${data.sea}`);
+      if (data.amenities) lines.push(`🌳 *Nearby:* ${data.amenities}`);
+      lines.push(`💰 *Price:* ${data.price}`);
+      if (data.desc) lines.push(`📝 *Description:* ${data.desc}`);
+      if (data.contactName) lines.push(`👤 *Contact:* ${data.contactName}`);
+      if (data.contactPhone) lines.push(`📞 *Phone:* ${data.contactPhone}`);
+      if (data.contactEmail) lines.push(`📧 *Email:* ${data.contactEmail}`);
+      return lines.join('\n');
+    }
 
-function calculate(){
+    // Render the listing card
+    function renderListing(data) {
+      // Build HTML
+      const badgeText = data.status === 'For Sale' ? '💰 For Sale' :
+                        data.status === 'For Rent' ? '🔑 For Rent' : '✅ Sold';
 
-let town = document.getElementById("town").value;
-let type = document.getElementById("type").value;
-let furnished = document.getElementById("furnished").value;
-let extras = parseInt(document.getElementById("extras").value);
+      const seaIcon = data.sea === 'Yes' ? '🌊' : '🏞️';
+      const seaText = data.sea === 'Yes' ? 'Yes – seaside proximity' : 'No – inland';
 
-let base = 12000;
+      const furnishedMap = {
+        'Yes': 'Fully furnished',
+        'No': 'Unfurnished',
+        'Partially': 'Partially furnished'
+      };
 
-// try find specific match
-if(data[town] && data[town][type]){
-base = data[town][type];
-}
+      const amenitiesList = data.amenities ? data.amenities.split(',').map(a => a.trim()).join(' · ') : 'Not specified';
 
-// adjustments
-if(furnished === "yes"){
-base += 3000;
-}
+      const html = `
+        <span class="badge">${badgeText}</span>
+        <div class="listing-title">${data.type} in ${data.village}</div>
+        <div class="listing-sub">
+          <span><i class="fas fa-door-open"></i> ${data.rooms} rooms</span>
+          <span><i class="fas fa-bath"></i> ${data.bathrooms} bathrooms</span>
+          <span><i class="fas fa-couch"></i> ${furnishedMap[data.furnished]}</span>
+          <span><i class="fas fa-water"></i> ${seaText}</span>
+        </div>
+        ${data.desc ? `<div class="listing-desc">${data.desc}</div>` : ''}
+        <div class="listing-details">
+          <div class="detail-item"><i class="fas fa-tag"></i> ${data.price}</div>
+          <div class="detail-item"><i class="fas fa-clock"></i> ${data.status}</div>
+          <div class="detail-item"><i class="fas fa-tree"></i> ${amenitiesList}</div>
+        </div>
+        <div class="listing-price">
+          ${data.price} <small>${data.status === 'For Rent' ? 'per month' : ''}</small>
+        </div>
+        <div class="listing-contact">
+          ${data.contactName ? `<span><i class="fas fa-user"></i> ${data.contactName}</span>` : ''}
+          ${data.contactPhone ? `<span><i class="fas fa-phone"></i> ${data.contactPhone}</span>` : ''}
+          ${data.contactEmail ? `<span><i class="fas fa-envelope"></i> ${data.contactEmail}</span>` : ''}
+        </div>
+      `;
+      cardContainer.innerHTML = html;
 
-base += extras;
+      // Store data for WhatsApp/copy
+      cardContainer.dataset.listingText = generateListingText(data);
+    }
 
-// confidence logic
-let confidence = "Medium";
+    // Handle form submit
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
 
-if(base > 30000){
-confidence = "High (Luxury Market)";
-}
-if(base < 12000){
-confidence = "Low (Budget Segment)";
-}
+      // Gather data
+      const data = {
+        type: document.getElementById('propertyType').value,
+        village: document.getElementById('village').value.trim(),
+        rooms: document.getElementById('rooms').value,
+        bathrooms: document.getElementById('bathrooms').value,
+        furnished: document.getElementById('furnished').value,
+        sea: document.getElementById('sea').value,
+        price: document.getElementById('price').value.trim(),
+        status: document.getElementById('status').value,
+        amenities: document.getElementById('amenities').value.trim(),
+        desc: document.getElementById('description').value.trim(),
+        contactName: document.getElementById('contactName').value.trim(),
+        contactPhone: document.getElementById('contactPhone').value.trim(),
+        contactEmail: document.getElementById('contactEmail').value.trim()
+      };
 
-document.getElementById("price").innerText =
-"Rs " + base.toLocaleString();
+      // Basic validation
+      if (!data.village || !data.price) {
+        alert('Please fill in at least Village/Town and Price.');
+        return;
+      }
 
-document.getElementById("confidence").innerText =
-"AI Confidence: " + confidence;
+      // Show preview
+      previewDiv.classList.remove('hidden');
+      renderListing(data);
 
-}
+      // Scroll to preview
+      previewDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
 
-function whatsapp(){
-let msg = encodeURIComponent("Hello, I want a full rental valuation for my property.");
-window.open("https://wa.me/23059237053?text=" + msg, "_blank");
-}
+    // Reset form also hides preview
+    form.addEventListener('reset', function() {
+      previewDiv.classList.add('hidden');
+      cardContainer.innerHTML = '';
+    });
 
-document.querySelectorAll("select").forEach(e=>{
-e.addEventListener("change",calculate);
-});
+    // WhatsApp sharing
+    whatsappBtn.addEventListener('click', function() {
+      const text = cardContainer.dataset.listingText;
+      if (!text) {
+        alert('Generate a listing first!');
+        return;
+      }
+      // Encode for WhatsApp
+      const encoded = encodeURIComponent(text);
+      const phone = '23059237053'; // as requested
+      const url = `https://wa.me/${phone}?text=${encoded}`;
+      window.open(url, '_blank');
+    });
 
-calculate();
+    // Copy listing text
+    copyBtn.addEventListener('click', function() {
+      const text = cardContainer.dataset.listingText;
+      if (!text) {
+        alert('Generate a listing first!');
+        return;
+      }
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Listing copied to clipboard!');
+      }).catch(() => {
+        // fallback
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        alert('Listing copied!');
+      });
+    });
 
+    // Pre-fill example (optional, but we can set some defaults)
+    // Not pre-filling to keep it clean.
+  })();
 </script>
 
 </body>
